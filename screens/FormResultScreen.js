@@ -48,7 +48,7 @@ const FormResultScreen = props => {
                   text='Contact us!'
                   onPress={() => {
                     props.navigation.navigate({
-                      routeName: 'Contacts',
+                      routeName: 'ContactsScreen',
                       params: {
                         hideHeader: true
                       }
@@ -60,7 +60,7 @@ const FormResultScreen = props => {
                 <CustomButton
                   text='Calculate again!'
                   onPress={() => {
-                    props.navigation.navigate('Form')
+                    props.navigation.navigate('FormScreen')
                   }}
                 />
               </View>

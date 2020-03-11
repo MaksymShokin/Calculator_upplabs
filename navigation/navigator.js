@@ -1,23 +1,54 @@
 import React from 'react';
+import {
+  View,
+  TouchableOpacity,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Button
+} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createDrawerNavigator,
+  DrawerItemList,
+  DrawerItem
+} from '@react-navigation/drawer'
+import { Ionicons } from '@expo/vector-icons';
+import { Linking } from 'expo';
 
-import MainScreen from '../screens/MainScreen';
+import MainScreen, {
+  screenOptions as MainScreenOptions
+} from '../screens/MainScreen';
 import FormScreen from '../screens/FormScreen';
 import FormResultScreen from '../screens/FormResultScreen';
+import ContactsScreen, {
+  screenOptions as ContactsScreenOptions
+} from '../screens/ContactsScreen';
 import Colors from '../constants/Colors';
+import UserScreen from '../screens/UserScreen';
+import CustomButton from '../components/CustomButton';
 
 const defaultNavigationOptions = {
   headerStyle: {
-    backgroundColor: '#fff'
+    backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : 'white'
   },
   headerTitleStyle: {
-    fontFamily: 'open-sans-bold'
+    fontFamily: 'raleway'
   },
   headerBackTitleStyle: {
-    fontFamily: 'open-sans'
+    fontFamily: 'raleway-bold'
   },
-  headerTintColor: Platform.OS === 'android' ? 'white' : Colors.mainBlue
+  headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
+  headerRight: () => (
+    <TouchableOpacity onPress={() => Linking.openURL('https://www.upplabs.com/')}>
+      <Image
+        source={Platform.OS === 'android' ? require('../assets/images/logos/icon-black.jpg') : require('../assets/images/logos/icon.jpg')}
+        resizeMode='cover'
+        style={styles.image}
+      />
+    </TouchableOpacity>
+  )
 };
 
 const FormStack = createStackNavigator();
@@ -25,32 +56,130 @@ const FormStack = createStackNavigator();
 const FormStackNavigator = () => {
   return (
     <FormStack.Navigator
-      screenOptions={{
-
-      }}>
+      initialRouteName="MainScreen"
+      screenOptions={defaultNavigationOptions}>
       <FormStack.Screen
         name="MainScreen"
         component={MainScreen}
+        options={MainScreenOptions}
       />
       <FormStack.Screen
         name="FormScreen"
         component={FormScreen}
+        options={{
+          headerTitle: 'Project calculator'
+        }}
       />
       <FormStack.Screen
         name="FormResultScreen"
         component={FormResultScreen}
+        options={{}}
+      />
+      <FormStack.Screen
+        name="UserScreen"
+        component={UserScreen}
+        options={{
+          headerTitle: 'Please fill in your information'
+        }}
+      />
+      <FormStack.Screen
+        name="ContactsScreen"
+        component={ContactsScreen}
+        options={{
+          headerTitle: 'Contact us'
+        }}
       />
     </FormStack.Navigator>
   );
 };
 
-const MainAppNavigator = props => {
 
+const ContactsStack = createStackNavigator();
+
+const ContactsStackNavigator = () => {
+  return (
+    <ContactsStack.Navigator screenOptions={defaultNavigationOptions}>
+      <ContactsStack.Screen
+        name="ContactsScreen"
+        component={ContactsScreen}
+        options={ContactsScreenOptions}
+      />
+    </ContactsStack.Navigator>
+  );
+};
+
+const MainDrawer = createDrawerNavigator();
+
+const MainNavigator = () => {
+  return (
+    <MainDrawer.Navigator
+      drawerType="slide"
+      initialRouteName="Home"
+      drawerContent={props => {
+        return (
+          <View style={{flex: 1, paddingTop: 30}}>
+            <SafeAreaView forceInset={{top: 'always', horizontal: 'never'}}>
+              <DrawerItemList {...props} />
+              <View style={styles.drawerButtonContainer}>
+                <CustomButton
+                  text="Visit our web site"
+                  color="black"
+                  onPress={() => Linking.openURL('https://www.upplabs.com/')}
+                />
+              </View>
+            </SafeAreaView>
+          </View>
+        );
+      }}
+      drawerContentOptions={{
+        activeTintColor: Colors.primaryColor
+      }}
+    >
+      <MainDrawer.Screen
+        name="Calculator"
+        component={FormStackNavigator}
+        options={{
+          drawerIcon: drawerConfig => (
+            <Ionicons
+              name={Platform.OS === 'android' ? 'md-calculator' : 'ios-calculator'}
+              size={23}
+            />
+          )
+        }}
+      />
+      <MainDrawer.Screen
+        name="Contacts"
+        component={ContactsStackNavigator}
+        options={{
+          drawerIcon: drawerConfig => (
+            <Ionicons
+              name={Platform.OS === 'android' ? 'md-contacts' : 'ios-contacts'}
+              size={23}
+            />
+          )
+        }}
+      />
+    </MainDrawer.Navigator>
+  );
+};
+
+const MainAppNavigator = props => {
   return (
     <NavigationContainer>
-      <FormStackNavigator/>
+      <MainNavigator/>
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  image: {
+    width: 45,
+    height: 45
+  },
+  drawerButtonContainer: {
+    marginHorizontal: 10,
+    marginTop: 30
+  }
+});
 
 export default MainAppNavigator;

@@ -10,9 +10,9 @@ import {
 import DefaultText from '../components/DefaultText';
 import Card from '../components/Card';
 import Colors from '../constants/Colors';
-import CardSelection from '../components/CardSelection';
-import CardSelectionCheckbox from '../components/CardSelectionCheckbox';
 import CustomButton from '../components/CustomButton';
+import MobileForm from '../components/MobileForm';
+import WebForm from '../components/WebForm';
 
 const FormScreen = props => {
   const [platform, setPlatform] = useState('');
@@ -208,277 +208,35 @@ const FormScreen = props => {
 
   if (platform === 'mobile') {
     mainForm = (
-      <View style={styles.screen}>
-        <DefaultText style={styles.platformSelectionTitleText}>Mobile app options</DefaultText>
-
-        <CardSelection
-          mainTitle='Which platform you are targeting?'
-          field='mobilePlatform'
-          valueOne='ios'
-          valueTwo='android'
-          valueThree='both'
-          titleOne='IOS'
-          titleTwo='Android'
-          titleThree='Both'
-          formPress={selectHandler}
-          cardsCount={3}
-          stateSelection={mobilePlatform}
-        />
-
-        <CardSelectionCheckbox
-          mainTitle='Which devices you are targeting?'
-          field='mobileDevice'
-          valueOne='smartphones'
-          valueTwo='tablets'
-          valueThree='smartwatches'
-          valueFour='desktop'
-          titleOne='Smartphones'
-          titleTwo='Tablets'
-          titleThree='Smartwatches'
-          titleFour='Desktop'
-          formPress={selectHandler}
-          cardsCount={4}
-          stateSelection={mobileDevices}
-        />
-
-        <CardSelection
-          mainTitle='Which design would like in your app?'
-          field='mobileDesign'
-          valueOne='basic'
-          valueTwo='advanced'
-          titleOne='Basic'
-          titleTwo='Advanced'
-          formPress={selectHandler}
-          cardsCount={2}
-          stateSelection={mobileDesign}
-        />
-
-        <CardSelectionCheckbox
-          mainTitle='Do you have any additional content?'
-          field='mobileContent'
-          valueOne='video'
-          valueTwo='photo'
-          valueThree='audio'
-          valueFour='streaming'
-          titleOne='Videos'
-          titleTwo='Photos'
-          titleThree='Audios'
-          titleFour='Streaming'
-          formPress={selectHandler}
-          cardsCount={4}
-          stateSelection={mobileContent}
-        />
-
-        <CardSelection
-          mainTitle='What about user authentication?'
-          field='mobileAuthentication'
-          valueOne='viaEmail'
-          valueTwo='viaSocial'
-          valueThree='none'
-          titleOne='via Email'
-          titleTwo='via Social networks'
-          titleThree='None'
-          formPress={selectHandler}
-          cardsCount={3}
-          stateSelection={mobileAuthentication}
-        />
-
-        <CardSelection
-          mainTitle='Do you need geolocation feature?'
-          field='mobileGeolocation'
-          valueOne='simple'
-          valueTwo='advanced'
-          valueThree='none'
-          titleOne='Simple'
-          titleTwo='Advanced'
-          titleThree='None'
-          formPress={selectHandler}
-          cardsCount={3}
-          stateSelection={mobileGeolocation}
-        />
-
-        <CardSelection
-          mainTitle='Do you need payments feature?'
-          field='mobilePayments'
-          valueOne='yes'
-          valueTwo='no'
-          titleOne='Yes'
-          titleTwo='No'
-          formPress={selectHandler}
-          cardsCount={2}
-          stateSelection={mobilePayments}
-        />
-
-        <CardSelection
-          mainTitle='Do you need push notifications?'
-          field='mobileNotifications'
-          valueOne='basic'
-          valueTwo='custom'
-          valueThree='none'
-          titleOne='Basic'
-          titleTwo='Custom'
-          titleThree='None'
-          formPress={selectHandler}
-          cardsCount={3}
-          stateSelection={mobileNotifications}
-        />
-
-        <CardSelection
-          mainTitle='Would you like to track analytics?'
-          field='mobileAnalytics'
-          valueOne='basic'
-          valueTwo='advanced'
-          valueThree='none'
-          titleOne='Basic'
-          titleTwo='Advanced'
-          titleThree='None'
-          formPress={selectHandler}
-          cardsCount={3}
-          stateSelection={mobileAnalytics}
-        />
-
-        <CardSelection
-          mainTitle='Do you need admin panel?'
-          field='mobileAdmin'
-          valueOne='yes'
-          valueTwo='no'
-          titleOne='Yes'
-          titleTwo='No'
-          formPress={selectHandler}
-          cardsCount={2}
-          stateSelection={mobileAdmin}
-        />
-
-      </View>
+      <MobileForm
+        mobilePlatform={mobilePlatform}
+        mobileDevices={mobileDevices}
+        mobileDesign={mobileDesign}
+        mobileAuthentication={mobileAuthentication}
+        mobileGeolocation={mobileGeolocation}
+        mobileAdmin={mobileAdmin}
+        mobileNotifications={mobileNotifications}
+        mobilePayments={mobilePayments}
+        mobileContent={mobileContent}
+        mobileAnalytics={mobileAnalytics}
+        selectHandler={selectHandler}
+      />
     )
+
   } else if (platform === 'web') {
     mainForm = (
-      <View style={styles.screen}>
-        <DefaultText style={styles.platformSelectionTitleText}>Web project options</DefaultText>
-
-        <CardSelection
-          mainTitle='Which design would like in your app?'
-          field='webDesign'
-          valueOne='basic'
-          valueTwo='advanced'
-          titleOne='Basic'
-          titleTwo='Advanced'
-          formPress={selectHandler}
-          cardsCount={2}
-          stateSelection={webDesign}
-        />
-
-        <CardSelection
-          mainTitle='Do you need multilingual support?'
-          field='webLanguages'
-          valueOne='basic'
-          valueTwo='advanced'
-          titleOne='Basic'
-          titleTwo='Advanced'
-          formPress={selectHandler}
-          cardsCount={2}
-          stateSelection={webLanguages}
-        />
-
-        <CardSelection
-          mainTitle='Do you need geolocation feature?'
-          field='webGeolocation'
-          valueOne='simple'
-          valueTwo='advanced'
-          valueThree='none'
-          titleOne='Simple'
-          titleTwo='Advanced'
-          titleThree='None'
-          formPress={selectHandler}
-          cardsCount={3}
-          stateSelection={webGeolocation}
-        />
-
-        <CardSelection
-          mainTitle='Would you like data security features?'
-          field='webSecurity'
-          valueOne='simple'
-          valueTwo='advanced'
-          valueThree='none'
-          titleOne='Simple'
-          titleTwo='Advanced'
-          titleThree='None'
-          formPress={selectHandler}
-          cardsCount={3}
-          stateSelection={webSecurity}
-        />
-
-        <CardSelection
-          mainTitle='Do you need a data parcing service?'
-          field='webParcing'
-          valueOne='simple'
-          valueTwo='advanced'
-          valueThree='none'
-          titleOne='Simple'
-          titleTwo='Advanced'
-          titleThree='None'
-          formPress={selectHandler}
-          cardsCount={3}
-          stateSelection={webParcing}
-        />
-
-        <CardSelection
-          mainTitle='Do you need notifications?'
-          field='webNotifications'
-          valueOne='email'
-          valueTwo='emailPush'
-          valueThree='none'
-          titleOne='Email'
-          titleTwo='Email + Push'
-          titleThree='None'
-          formPress={selectHandler}
-          cardsCount={3}
-          stateSelection={webNotifications}
-        />
-
-        <CardSelection
-          mainTitle='Do you need payment systems integration?'
-          field='webPayment'
-          valueOne='simple'
-          valueTwo='advanced'
-          valueThree='none'
-          titleOne='Simple'
-          titleTwo='Advanced'
-          titleThree='None'
-          formPress={selectHandler}
-          cardsCount={3}
-          stateSelection={webPayment}
-        />
-
-        <CardSelection
-          mainTitle='Do you need a communications feature?'
-          field='webCommunication'
-          valueOne='simple'
-          valueTwo='advanced'
-          valueThree='none'
-          titleOne='Simple'
-          titleTwo='Advanced'
-          titleThree='None'
-          formPress={selectHandler}
-          cardsCount={3}
-          stateSelection={webCommunication}
-        />
-
-        <CardSelection
-          mainTitle='Will you need to set permissions?'
-          field='webPermissions'
-          valueOne='simple'
-          valueTwo='advanced'
-          valueThree='default'
-          titleOne='Simple'
-          titleTwo='Advanced'
-          titleThree='Default'
-          formPress={selectHandler}
-          cardsCount={3}
-          stateSelection={webPermissions}
-        />
-
-      </View>
+      <WebForm
+        webDesign={webDesign}
+        webGeolocation={webGeolocation}
+        webLanguages={webLanguages}
+        webNotifications={webNotifications}
+        webParcing={webParcing}
+        webSecurity={webSecurity}
+        webCommunication={webCommunication}
+        webPayment={webPayment}
+        webPermissions={webPermissions}
+        selectHandler={selectHandler}
+      />
     )
   }
 
@@ -554,12 +312,6 @@ const FormScreen = props => {
   )
 };
 
-FormScreen.navigationOptions = navData => {
-  return {
-    headerTitle: 'Our Services'
-  }
-};
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -569,7 +321,7 @@ const styles = StyleSheet.create({
     marginTop: 15
   },
   platformSelectionTitleText: {
-    fontSize: 22
+    fontSize: 26
   },
   selectionContainer: {
     flex: 1,
