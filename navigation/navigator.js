@@ -11,8 +11,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   createDrawerNavigator,
-  DrawerItemList,
-  DrawerItem
+  DrawerItemList
 } from '@react-navigation/drawer'
 import { Ionicons } from '@expo/vector-icons';
 import { Linking } from 'expo';
@@ -25,8 +24,10 @@ import FormResultScreen from '../screens/FormResultScreen';
 import ContactsScreen, {
   screenOptions as ContactsScreenOptions
 } from '../screens/ContactsScreen';
+import SearchHistoryScreen, {
+  screenOptions as SearchHistoryScreenOptions
+} from '../screens/SearchHistoryScreen';
 import Colors from '../constants/Colors';
-import UserScreen from '../screens/UserScreen';
 import CustomButton from '../components/CustomButton';
 
 const defaultNavigationOptions = {
@@ -76,13 +77,6 @@ const FormStackNavigator = () => {
         options={{}}
       />
       <FormStack.Screen
-        name="UserScreen"
-        component={UserScreen}
-        options={{
-          headerTitle: 'Please fill in your information'
-        }}
-      />
-      <FormStack.Screen
         name="ContactsScreen"
         component={ContactsScreen}
         options={{
@@ -92,7 +86,6 @@ const FormStackNavigator = () => {
     </FormStack.Navigator>
   );
 };
-
 
 const ContactsStack = createStackNavigator();
 
@@ -105,6 +98,20 @@ const ContactsStackNavigator = () => {
         options={ContactsScreenOptions}
       />
     </ContactsStack.Navigator>
+  );
+};
+
+const HistoryStack = createStackNavigator();
+
+const HistoryStackNavigator = () => {
+  return (
+    <HistoryStack.Navigator screenOptions={defaultNavigationOptions}>
+      <HistoryStack.Screen
+        name="HistoryScreen"
+        component={SearchHistoryScreen}
+        options={SearchHistoryScreenOptions}
+      />
+    </HistoryStack.Navigator>
   );
 };
 
@@ -142,6 +149,18 @@ const MainNavigator = () => {
           drawerIcon: drawerConfig => (
             <Ionicons
               name={Platform.OS === 'android' ? 'md-calculator' : 'ios-calculator'}
+              size={23}
+            />
+          )
+        }}
+      />
+      <MainDrawer.Screen
+        name="History"
+        component={HistoryStackNavigator}
+        options={{
+          drawerIcon: drawerConfig => (
+            <Ionicons
+              name='ios-archive'
               size={23}
             />
           )
