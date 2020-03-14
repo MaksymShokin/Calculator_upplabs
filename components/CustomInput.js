@@ -1,46 +1,61 @@
 import React from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {
+  View,
+  TextInput,
+  StyleSheet
+} from 'react-native';
+import DefaultText from './DefaultText';
+import DefaultTextBold from './DefaultTextBold';
+import Colors from '../constants/Colors';
 
 const CustomInput = props => {
+  const {label, onChangeHandler, onBlurHandler, value, errorText, error} = props;
+
+  let errorField;
+
+  if (error) {
+    errorField = (
+      <View style={styles.errorContainer}>
+        <DefaultText style={styles.errorText}>{error}</DefaultText>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.inputContainer}>
-      <Text style={styles.label}>{props.label}</Text>
+      <DefaultTextBold style={styles.label}>{label}</DefaultTextBold>
       <TextInput
         {...props}
         style={styles.input}
-        value={inputState.value}
-        onChangeText={textChangeHandler}
-        onBlur={lostFocusHandler}
+        value={value}
+        onChangeText={onChangeHandler}
+        onBlur={onBlurHandler}
       />
-      {!inputState.isValid && inputState.touched && (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{props.errorText}</Text>
-        </View>
-      )}
+      {errorField}
+
     </View>
   )
 };
 
 const styles = StyleSheet.create({
   inputContainer: {
-    width: '100%'
+    width: '90%'
   },
   label: {
-    fontFamily: 'open-sans-bold',
     marginVertical: 8
   },
   input: {
     paddingHorizontal: 2,
     paddingVertical: 5,
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1
+    borderBottomColor: Colors.darkGrey,
+    borderBottomWidth: 2,
+    backgroundColor: Colors.lightGrey,
+    borderRadius: 10
   },
   errorContainer: {
     marginVertical: 5
   },
   errorText: {
-    fontFamily: 'open-sans',
     color: 'red',
     fontSize: 13
   }

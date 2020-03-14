@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
 import DefaultTextBold from './DefaultTextBold';
 
-const customButton = props => {
+const CustomButton = props => {
   return (
     <TouchableOpacity
       style={props.color === 'orange' ? styles.buttonStyleOrange : styles.buttonStyleBlack}
@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default customButton;
+export default CustomButton;

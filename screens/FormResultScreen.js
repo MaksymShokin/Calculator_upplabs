@@ -6,29 +6,33 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
-  Image,
-  Dimensions,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
+  KeyboardAvoidingView
 } from 'react-native';
-import DefaultText from '../components/DefaultText';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
-import CustomButton from '../components/CustomButton';
 import UserForm from '../components/UserForm';
 import FormResult from '../components/FormResult';
 
-
 const FormResultScreen = props => {
   const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState('user');
   const time = props.route.params.time;
-  let mainContent = <UserForm/>;
+
+  const formSwitch = formToShow => {
+    if (formToShow === 'user') {
+      setForm('user');
+    } else if (formToShow === 'result') {
+      setForm('result');
+    }
+  };
 
   const logIn = async () => {
     try {
       const userData = await AsyncStorage.getItem('userData');
       if (!userData) {
-        mainContent = <FormResult time={time} navigation={props.navigation}/>;
+        setForm('result');
       }
     } catch (error) {
       throw new Error(error)
@@ -55,9 +59,15 @@ const FormResultScreen = props => {
 
   return (
     <LinearGradient colors={['#ebdb34', '#ebb734', '#a67702']} style={styles.linearGradient}>
-      <ScrollView>
-        {mainContent}
-      </ScrollView>
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior="padding"
+        keyboardVerticalOffset={100}
+      >
+        <ScrollView>
+          {form === 'user' ? <UserForm formSwitch={formSwitch}/> : <FormResult time={time} navigation={props.navigation}/>}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </LinearGradient>
   )
 };
