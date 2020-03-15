@@ -1,18 +1,19 @@
-import {  } from '../actions/userActions';
-
-import { SAVEUSERDATA } from '../actions/userActions';
+import {
+  SAVE_USER_DATA,
+  SAVE_USER_INPUT
+} from '../actions/userActions';
 
 const initialState = {
-  firstName: null,
-  lastName: null,
-  email: null,
-  country: null,
-  company: null
+  firstName: '',
+  lastName: '',
+  email: '',
+  country: '',
+  company: ''
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SAVEUSERDATA:
+    case SAVE_USER_DATA:
       return {
         firstName: action.firstName,
         lastName: action.lastName,
@@ -20,6 +21,35 @@ export default (state = initialState, action) => {
         country: action.country,
         company: action.company
       };
+    case SAVE_USER_INPUT:
+      switch (action.input) {
+        case 'firstName':
+          return {
+            ...state,
+            firstName: action.value
+          };
+        case 'lastName':
+          return {
+            ...state,
+            lastName: action.value
+          };
+        case 'email':
+          return {
+            ...state,
+            email: action.value
+          };
+        case 'country':
+          return {
+            ...state,
+            country: action.value
+          };
+        case 'company':
+          return {
+            ...state,
+            company: action.value
+          }
+      }
+      break;
     default:
       return state;
   }

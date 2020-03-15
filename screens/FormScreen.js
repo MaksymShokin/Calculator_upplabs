@@ -120,7 +120,6 @@ const FormScreen = props => {
 
   const navigateToFormResult = platform => {
     let time = 30;
-    debugger
 
     if (platform === 'mobile') {
       const allValues = [

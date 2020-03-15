@@ -9,7 +9,7 @@ import DefaultTextBold from './DefaultTextBold';
 import Colors from '../constants/Colors';
 
 const CustomInput = props => {
-  const {label, onChangeHandler, onBlurHandler, value, errorText, error} = props;
+  const {label, onChangeHandler, onBlurHandler, value, inputName, error} = props;
 
   let errorField;
 
@@ -28,7 +28,7 @@ const CustomInput = props => {
         {...props}
         style={styles.input}
         value={value}
-        onChangeText={onChangeHandler}
+        onChangeText={text => onChangeHandler(inputName, text)}
         onBlur={onBlurHandler}
       />
       {errorField}

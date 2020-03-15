@@ -14,11 +14,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
 import UserForm from '../components/UserForm';
 import FormResult from '../components/FormResult';
+import * as userActions from '../store/actions/userActions';
+import {useDispatch} from 'react-redux';
 
 const FormResultScreen = props => {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState('user');
   const time = props.route.params.time;
+
+  const dispatch = useDispatch();
 
   const formSwitch = formToShow => {
     if (formToShow === 'user') {
@@ -28,18 +32,29 @@ const FormResultScreen = props => {
     }
   };
 
-  const logIn = async () => {
+  const fetchUserDataFromStorage = async () => {
     try {
-      const userData = await AsyncStorage.getItem('userData');
-      if (!userData) {
+      debugger
+      const userDataFormStorage = await AsyncStorage.getItem('userData');
+      console.log('storage',JSON.parse(userDataFormStorage))
+      const transformedData = JSON.parse(userDataFormStorage);
+      console.log(transformedData.hasOwnProperty('firstName'));
+      if (transformedData.hasOwnProperty('firstName')) {
+
+        const {firstName, lastName, email, country, company} = transformedData;
+
+        dispatch(userActions.saveUserData(firstName, lastName, email, country, company));
+
         setForm('result');
       }
     } catch (error) {
+      console.log('error',error)
       throw new Error(error)
     }
   };
 
   useEffect(() => {
+    fetchUserDataFromStorage();
     setLoading(true);
 
     const setSpinner = () => {
@@ -47,7 +62,7 @@ const FormResultScreen = props => {
     };
 
     setTimeout(setSpinner, 1000);
-  }, []);
+  }, [dispatch]);
 
   if (loading) {
     return (

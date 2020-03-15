@@ -4,20 +4,18 @@ import {
   StyleSheet,
   Alert
 } from 'react-native';
-import DefaultText from '../components/DefaultText';
 import DefaultTextBold from './DefaultTextBold';
 import CustomInput from './CustomInput';
 import CustomButton from './CustomButton';
-import {useDispatch} from 'react-redux';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 
 import * as userActions from '../store/actions/userActions';
 
 const UserForm = props => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [country, setCountry] = useState('');
-  const [company, setCompany] = useState('');
+  const userData = useSelector(state => state.user);
 
   const [firstNameError, setFirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
@@ -27,23 +25,24 @@ const UserForm = props => {
   const dispatch = useDispatch();
 
   const checkValidation = () => {
-    if (!firstName) {
-      onBlurHandler('firstName', firstName)
+    debugger
+    if (!userData.firstName) {
+      onBlurHandler('firstName', userData.firstName)
     }
 
-    if (!lastName) {
-      onBlurHandler('lastName', lastName)
+    if (!userData.lastName) {
+      onBlurHandler('lastName', userData.lastName)
     }
 
-    if (!email) {
-      onBlurHandler('email', email)
+    if (!userData.email) {
+      onBlurHandler('email', userData.email)
     }
 
-    if (!country) {
-      onBlurHandler('country', country)
+    if (!userData.country) {
+      onBlurHandler('country', userData.country)
     }
 
-    if (!firstName || !lastName || !email || !country || firstNameError || lastNameError || emailError || countryError) {
+    if (!userData.firstName || !userData.lastName || !userData.email || !userData.country || firstNameError || lastNameError || emailError || countryError) {
       Alert.alert(
         'Please fill in form',
         'Check for error and empty fields',
@@ -53,8 +52,8 @@ const UserForm = props => {
         {cancelable: false},
       );
     } else {
-      debugger
-      dispatch(userActions.saveUserData(firstName, lastName, email, country, company));
+      console.log('gotoresult')
+      dispatch(userActions.saveUserData(userData.firstName, userData.lastName, userData.email, userData.country, userData.company));
       props.formSwitch('result')
     }
   };
@@ -74,7 +73,13 @@ const UserForm = props => {
       case 'country':
         setCountryError(value.length < 3 ? 'Country name should have at least 3 letters' : '');
         break;
+      default:
+        break;
     }
+  };
+
+  const onChangeHandler = (input, value) => {
+    dispatch(userActions.saveUserInput(input, value))
   };
 
   return (
@@ -84,36 +89,41 @@ const UserForm = props => {
       </DefaultTextBold>
       <CustomInput
         label='First name'
-        value={firstName}
-        onChangeHandler={setFirstName}
+        inputName='firstName'
+        value={userData.firstName}
+        onChangeHandler={onChangeHandler}
         error={firstNameError}
-        onBlurHandler={() => onBlurHandler('firstName', firstName)}
+        onBlurHandler={() => onBlurHandler('firstName', userData.firstName)}
       />
       <CustomInput
         label='Last name'
-        value={lastName}
-        onChangeHandler={setLastName}
+        inputName='lastName'
+        value={userData.lastName}
+        onChangeHandler={onChangeHandler}
         error={lastNameError}
-        onBlurHandler={() => onBlurHandler('lastName', lastName)}
+        onBlurHandler={() => onBlurHandler('lastName', userData.lastName)}
       />
       <CustomInput
         label='Email address'
-        value={email}
-        onChangeHandler={setEmail}
+        inputName='email'
+        value={userData.email}
+        onChangeHandler={onChangeHandler}
         error={emailError}
-        onBlurHandler={() => onBlurHandler('email', email)}
+        onBlurHandler={() => onBlurHandler('email', userData.email)}
       />
       <CustomInput
         label='Country'
-        value={country}
-        onChangeHandler={setCountry}
+        inputName='country'
+        value={userData.country}
+        onChangeHandler={onChangeHandler}
         error={countryError}
-        onBlurHandler={() => onBlurHandler('country', country)}
+        onBlurHandler={() => onBlurHandler('country', userData.country)}
       />
       <CustomInput
         label='Company'
-        value={company}
-        onChangeHandler={setCompany}
+        inputName='company'
+        value={userData.company}
+        onChangeHandler={onChangeHandler}
       />
       <View style={styles.buttonContainer}>
         <CustomButton
