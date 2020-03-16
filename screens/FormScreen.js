@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -13,109 +13,45 @@ import Colors from '../constants/Colors';
 import CustomButton from '../components/CustomButton';
 import MobileForm from '../components/MobileForm';
 import WebForm from '../components/WebForm';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
+import * as formActions from '../store/actions/formActions';
 
 const FormScreen = props => {
-  const [platform, setPlatform] = useState('');
+  const dispatch = useDispatch();
+  const formData = useSelector(state => state.form);
 
-  //mobile states
-  const [mobilePlatform, setMobilePlatform] = useState('');
-  const [mobileDevices, setMobileDevices] = useState({
-    smartphones: false,
-    tablets: false,
-    smartwatches: false,
-    desktop: false
-  });
-  const [mobileDesign, setMobileDesign] = useState('');
-  const [mobileAuthentication, setMobileAuthentication] = useState('');
-  const [mobileGeolocation, setMobileGeolocation] = useState('');
-  const [mobileAdmin, setMobileAdmin] = useState('');
-  const [mobileNotifications, setMobileNotifications] = useState('');
-  const [mobilePayments, setMobilePayments] = useState('');
-  const [mobileContent, setMobileContent] = useState({
-    video: false,
-    photo: false,
-    audio: false,
-    streaming: false
-  });
-  const [mobileAnalytics, setMobileAnalytics] = useState('');
+  const platform = formData.platform;
 
-  // desktop states
-  const [webDesign, setWebDesign] = useState('');
-  const [webGeolocation, setWebGeolocation] = useState('');
-  const [webLanguages, setWebLanguages] = useState('');
-  const [webNotifications, setWebNotifications] = useState('');
-  const [webParcing, setWebParcing] = useState('');
-  const [webSecurity, setWebSecurity] = useState('');
-  const [webCommunication, setWebCommunication] = useState('');
-  const [webPayment, setWebPayment] = useState('');
-  const [webPermissions, setWebPermissions] = useState('');
+  const {
+    mobilePlatform,
+    mobileDevices,
+    mobileDesign,
+    mobileAuthentication,
+    mobileGeolocation,
+    mobileAdmin,
+    mobileNotifications,
+    mobilePayments,
+    mobileContent,
+    mobileAnalytics
+  } = formData.mobile;
+
+  const {
+    webDesign,
+    webGeolocation,
+    webLanguages,
+    webNotifications,
+    webParcing,
+    webSecurity,
+    webCommunication,
+    webPayment,
+    webPermissions
+  } = formData.web;
 
   const selectHandler = (field, value) => {
-    switch (field) {
-      case 'platform':
-        setPlatform(value);
-        break;
-      case 'mobilePlatform':
-        setMobilePlatform(value);
-        break;
-      case 'mobileDevice':
-        setMobileDevices({...mobileDevices, [value]: !(mobileDevices[value])});
-        break;
-      case 'mobileDesign':
-        setMobileDesign(value);
-        break;
-      case 'mobileAuthentication':
-        setMobileAuthentication(value);
-        break;
-      case 'mobileGeolocation':
-        setMobileGeolocation(value);
-        break;
-      case 'mobileAdmin':
-        setMobileAdmin(value);
-        break;
-      case 'mobileNotifications':
-        setMobileNotifications(value);
-        break;
-      case 'mobilePayments':
-        setMobilePayments(value);
-        break;
-      case 'mobileContent':
-        setMobileContent({...mobileContent, [value]: !(mobileContent[value])});
-        break;
-      case 'mobileAnalytics':
-        setMobileAnalytics(value);
-        break;
-      case 'webGeolocation':
-        setWebGeolocation(value);
-        break;
-      case 'webLanguages':
-        setWebLanguages(value);
-        break;
-      case 'webNotifications':
-        setWebNotifications(value);
-        break;
-      case 'webParcing':
-        setWebParcing(value);
-        break;
-      case 'webSecurity':
-        setWebSecurity(value);
-        break;
-      case 'webDesign':
-        setWebDesign(value);
-        break;
-      case 'webCommunication':
-        setWebCommunication(value);
-        break;
-      case 'webPayment':
-        setWebPayment(value);
-        break;
-      case 'webPermissions':
-        setWebPermissions(value);
-        break;
-      default: {
-        break;
-      }
-    }
+    dispatch(formActions.saveFormOption(field, value));
   };
 
   const navigateToFormResult = platform => {

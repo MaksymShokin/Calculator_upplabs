@@ -3,6 +3,7 @@ import MainNavigator from './navigation/navigator';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import userReducer from './store/reducers/userReducer';
+import formReducer from './store/reducers/formReducer';
 import {
   applyMiddleware,
   combineReducers,
@@ -12,7 +13,8 @@ import ReduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
 const rootReducer = combineReducers({
-  user: userReducer
+  user: userReducer,
+  form: formReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

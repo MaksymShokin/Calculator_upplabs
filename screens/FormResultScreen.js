@@ -36,15 +36,12 @@ const FormResultScreen = props => {
     try {
       debugger
       const userDataFormStorage = await AsyncStorage.getItem('userData');
-      console.log('storage',JSON.parse(userDataFormStorage))
       const transformedData = JSON.parse(userDataFormStorage);
-      console.log(transformedData.hasOwnProperty('firstName'));
-      if (transformedData.hasOwnProperty('firstName')) {
 
+      if (transformedData.hasOwnProperty('firstName')) {
         const {firstName, lastName, email, country, company} = transformedData;
 
         dispatch(userActions.saveUserData(firstName, lastName, email, country, company));
-
         setForm('result');
       }
     } catch (error) {
@@ -86,12 +83,6 @@ const FormResultScreen = props => {
     </LinearGradient>
   )
 };
-
-// FormResultScreen.navigationOptions = navData => {
-//   return {
-//     headerShown: false
-//   }
-// };
 
 const styles = StyleSheet.create({
   screen: {

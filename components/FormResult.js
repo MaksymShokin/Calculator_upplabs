@@ -7,8 +7,16 @@ import {
 } from 'react-native';
 import DefaultText from './DefaultText';
 import CustomButton from './CustomButton';
+import * as formActions from '../store/actions/formActions';
+import { useDispatch } from 'react-redux';
 
 const FormResult = props => {
+  const dispatch = useDispatch();
+
+  const calculateAgain = () => {
+    dispatch(formActions.resetForm());
+    props.navigation.navigate('FormScreen')
+  };
 
   return (
     <View style={styles.screen}>
@@ -34,9 +42,7 @@ const FormResult = props => {
           <View style={styles.button}>
             <CustomButton
               text='Calculate again!'
-              onPress={() => {
-                props.navigation.navigate('FormScreen')
-              }}
+              onPress={calculateAgain}
             />
           </View>
         </View>

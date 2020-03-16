@@ -42,7 +42,7 @@ const MobileForm = props => {
 
       <CardSelectionCheckbox
         mainTitle='Which devices you are targeting?'
-        field='mobileDevice'
+        field='mobileDevices'
         valueOne='smartphones'
         valueTwo='tablets'
         valueThree='smartwatches'
