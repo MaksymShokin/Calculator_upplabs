@@ -15,6 +15,7 @@ import Colors from '../constants/Colors';
 import UserForm from '../components/UserForm';
 import FormResult from '../components/FormResult';
 import * as userActions from '../store/actions/userActions';
+import * as database from '../database/database';
 import { useSelector, useDispatch } from 'react-redux';
 
 const FormResultScreen = props => {
@@ -33,7 +34,6 @@ const FormResultScreen = props => {
 
   const fetchUserDataFromStorage = async () => {
     try {
-      debugger
       const userDataFormStorage = await AsyncStorage.getItem('userData');
       const transformedData = JSON.parse(userDataFormStorage);
 
@@ -42,6 +42,7 @@ const FormResultScreen = props => {
 
         dispatch(userActions.saveUserData(firstName, lastName, email, country, company));
         setForm('result');
+        return true
       }
     } catch (error) {
       throw new Error(error)
@@ -49,7 +50,11 @@ const FormResultScreen = props => {
   };
 
   useEffect(() => {
-    fetchUserDataFromStorage();
+    fetchUserDataFromStorage().then(function(result) {
+      if (result) {
+        dispatch(database.saveDataToDatabase());
+      }
+    });
     setLoading(true);
 
     const setSpinner = () => {

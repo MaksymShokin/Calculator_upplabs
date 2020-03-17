@@ -193,7 +193,8 @@ const MainAppNavigator = props => {
 const styles = StyleSheet.create({
   image: {
     width: 45,
-    height: 45
+    height: 45,
+    borderRadius: 30
   },
   drawerButtonContainer: {
     marginHorizontal: 10,

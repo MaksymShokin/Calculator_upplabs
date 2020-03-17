@@ -13,36 +13,37 @@ import {
 } from 'react-redux';
 
 import * as userActions from '../store/actions/userActions';
+import * as database from '../database/database';
 
 const UserForm = props => {
-  const userData = useSelector(state => state.user);
-
   const [firstNameError, setFirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [countryError, setCountryError] = useState('');
 
+  const {firstName, lastName, email, country, company} = useSelector(state => state.user);
+
   const dispatch = useDispatch();
 
   const checkValidation = () => {
     debugger
-    if (!userData.firstName) {
-      onBlurHandler('firstName', userData.firstName)
+    if (!firstName) {
+      onBlurHandler('firstName', firstName)
     }
 
-    if (!userData.lastName) {
-      onBlurHandler('lastName', userData.lastName)
+    if (!lastName) {
+      onBlurHandler('lastName', lastName)
     }
 
-    if (!userData.email) {
-      onBlurHandler('email', userData.email)
+    if (!email) {
+      onBlurHandler('email', email)
     }
 
-    if (!userData.country) {
-      onBlurHandler('country', userData.country)
+    if (!country) {
+      onBlurHandler('country', country)
     }
 
-    if (!userData.firstName || !userData.lastName || !userData.email || !userData.country || firstNameError || lastNameError || emailError || countryError) {
+    if (!firstName || !lastName || !email || !country || firstNameError || lastNameError || emailError || countryError) {
       Alert.alert(
         'Please fill in form',
         'Check for error and empty fields',
@@ -52,8 +53,8 @@ const UserForm = props => {
         {cancelable: false},
       );
     } else {
-      console.log('gotoresult')
-      dispatch(userActions.saveUserData(userData.firstName, userData.lastName, userData.email, userData.country, userData.company));
+      dispatch(userActions.saveUserData(firstName, lastName, email, country, company));
+      dispatch(database.saveDataToDatabase());
       props.formSwitch('result')
     }
   };
@@ -90,39 +91,39 @@ const UserForm = props => {
       <CustomInput
         label='First name'
         inputName='firstName'
-        value={userData.firstName}
+        value={firstName}
         onChangeHandler={onChangeHandler}
         error={firstNameError}
-        onBlurHandler={() => onBlurHandler('firstName', userData.firstName)}
+        onBlurHandler={() => onBlurHandler('firstName', firstName)}
       />
       <CustomInput
         label='Last name'
         inputName='lastName'
-        value={userData.lastName}
+        value={lastName}
         onChangeHandler={onChangeHandler}
         error={lastNameError}
-        onBlurHandler={() => onBlurHandler('lastName', userData.lastName)}
+        onBlurHandler={() => onBlurHandler('lastName', lastName)}
       />
       <CustomInput
         label='Email address'
         inputName='email'
-        value={userData.email}
+        value={email}
         onChangeHandler={onChangeHandler}
         error={emailError}
-        onBlurHandler={() => onBlurHandler('email', userData.email)}
+        onBlurHandler={() => onBlurHandler('email', email)}
       />
       <CustomInput
         label='Country'
         inputName='country'
-        value={userData.country}
+        value={country}
         onChangeHandler={onChangeHandler}
         error={countryError}
-        onBlurHandler={() => onBlurHandler('country', userData.country)}
+        onBlurHandler={() => onBlurHandler('country', country)}
       />
       <CustomInput
         label='Company'
         inputName='company'
-        value={userData.company}
+        value={company}
         onChangeHandler={onChangeHandler}
       />
       <View style={styles.buttonContainer}>

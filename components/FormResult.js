@@ -8,7 +8,6 @@ import {
 import DefaultText from './DefaultText';
 import CustomButton from './CustomButton';
 import * as formActions from '../store/actions/formActions';
-import * as timeActions from '../store/actions/timeActions';
 import { useDispatch } from 'react-redux';
 
 const FormResult = props => {
@@ -16,7 +15,6 @@ const FormResult = props => {
 
   const calculateAgain = () => {
     dispatch(formActions.resetForm());
-    // dispatch(timeActions.resetTime());
     props.navigation.navigate('FormScreen')
   };
 
