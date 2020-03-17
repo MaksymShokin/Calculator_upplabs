@@ -1,6 +1,11 @@
 import React from 'react';
 import DefaultText from './DefaultText';
-import { Dimensions, TouchableOpacity, View, StyleSheet } from 'react-native';
+import {
+  Dimensions,
+  TouchableOpacity,
+  View,
+  StyleSheet
+} from 'react-native';
 import Card from './Card';
 import Colors from '../constants/Colors';
 
@@ -18,27 +23,33 @@ const FormSelection = props => {
     titleFour,
     formPress,
     cardsCount,
-    stateSelection
+    stateSelection,
+    checkbox
   } = props;
+
+  let selectorOne = checkbox ? stateSelection[valueOne] : stateSelection === valueOne;
+  let selectorTwo = checkbox ? stateSelection[valueTwo] : stateSelection === valueTwo;
+  let selectorThree = checkbox ? stateSelection[valueThree] : stateSelection === valueThree;
+  let selectorFour = checkbox ? stateSelection[valueFour] : stateSelection === valueFour;
 
   return (
     <View style={styles.selectionContainer}>
       <DefaultText>{mainTitle}</DefaultText>
       <View style={styles.smallCardsContainer}>
         <TouchableOpacity onPress={() => formPress(field, valueOne)}>
-          <Card style={stateSelection === valueOne ? styles.smallSelectedCard : styles.smallCard}>
+          <Card style={selectorOne ? styles.smallSelectedCard : styles.smallCard}>
             <DefaultText style={styles.cardText}>{titleOne}</DefaultText>
           </Card>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => formPress(field, valueTwo)}>
-          <Card style={stateSelection === valueTwo ? styles.smallSelectedCard : styles.smallCard}>
+          <Card style={selectorTwo ? styles.smallSelectedCard : styles.smallCard}>
             <DefaultText style={styles.cardText}>{titleTwo}</DefaultText>
           </Card>
         </TouchableOpacity>
 
         {cardsCount > 2 && (
           <TouchableOpacity onPress={() => formPress(field, valueThree)}>
-            <Card style={stateSelection === valueThree ? styles.smallSelectedCard : styles.smallCard}>
+            <Card style={selectorThree ? styles.smallSelectedCard : styles.smallCard}>
               <DefaultText style={styles.cardText}>{titleThree}</DefaultText>
             </Card>
           </TouchableOpacity>
@@ -46,7 +57,7 @@ const FormSelection = props => {
 
         {cardsCount > 3 && (
           <TouchableOpacity onPress={() => formPress(field, valueFour)}>
-            <Card style={stateSelection === valueFour ? styles.smallSelectedCard : styles.smallCard}>
+            <Card style={selectorFour ? styles.smallSelectedCard : styles.smallCard}>
               <DefaultText style={styles.cardText}>{titleFour}</DefaultText>
             </Card>
           </TouchableOpacity>

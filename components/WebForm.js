@@ -34,6 +34,7 @@ const WebForm = props => {
         formPress={selectHandler}
         cardsCount={2}
         stateSelection={webDesign}
+        checkbox={false}
       />
 
       <CardSelection
@@ -46,6 +47,7 @@ const WebForm = props => {
         formPress={selectHandler}
         cardsCount={2}
         stateSelection={webLanguages}
+        checkbox={false}
       />
 
       <CardSelection
@@ -60,6 +62,7 @@ const WebForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={webGeolocation}
+        checkbox={false}
       />
 
       <CardSelection
@@ -74,6 +77,7 @@ const WebForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={webSecurity}
+        checkbox={false}
       />
 
       <CardSelection
@@ -88,6 +92,7 @@ const WebForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={webParcing}
+        checkbox={false}
       />
 
       <CardSelection
@@ -102,6 +107,7 @@ const WebForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={webNotifications}
+        checkbox={false}
       />
 
       <CardSelection
@@ -116,6 +122,7 @@ const WebForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={webPayment}
+        checkbox={false}
       />
 
       <CardSelection
@@ -130,6 +137,7 @@ const WebForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={webCommunication}
+        checkbox={false}
       />
 
       <CardSelection
@@ -144,6 +152,7 @@ const WebForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={webPermissions}
+        checkbox={false}
       />
 
     </View>

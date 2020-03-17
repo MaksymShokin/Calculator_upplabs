@@ -5,7 +5,6 @@ import {
 } from 'react-native';
 import DefaultText from '../components/DefaultText';
 import CardSelection from '../components/CardSelection';
-import CardSelectionCheckbox from '../components/CardSelectionCheckbox';
 
 const MobileForm = props => {
   const {
@@ -32,18 +31,16 @@ const MobileForm = props => {
         valueOne='ios'
         valueTwo='android'
         valueThree='both'
-        timeOne='20'
-        timeTwo='20'
-        timeThree='30'
         titleOne='IOS'
         titleTwo='Android'
         titleThree='Both'
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={mobilePlatform}
+        checkbox={false}
       />
 
-      <CardSelectionCheckbox
+      <CardSelection
         mainTitle='Which devices you are targeting?'
         field='mobileDevices'
         valueOne='smartphones'
@@ -57,6 +54,7 @@ const MobileForm = props => {
         formPress={selectHandler}
         cardsCount={4}
         stateSelection={mobileDevices}
+        checkbox={true}
       />
 
       <CardSelection
@@ -69,9 +67,10 @@ const MobileForm = props => {
         formPress={selectHandler}
         cardsCount={2}
         stateSelection={mobileDesign}
+        checkbox={false}
       />
 
-      <CardSelectionCheckbox
+      <CardSelection
         mainTitle='Do you have any additional content?'
         field='mobileContent'
         valueOne='video'
@@ -85,6 +84,7 @@ const MobileForm = props => {
         formPress={selectHandler}
         cardsCount={4}
         stateSelection={mobileContent}
+        checkbox={true}
       />
 
       <CardSelection
@@ -99,6 +99,7 @@ const MobileForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={mobileAuthentication}
+        checkbox={false}
       />
 
       <CardSelection
@@ -113,6 +114,7 @@ const MobileForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={mobileGeolocation}
+        checkbox={false}
       />
 
       <CardSelection
@@ -125,6 +127,7 @@ const MobileForm = props => {
         formPress={selectHandler}
         cardsCount={2}
         stateSelection={mobilePayments}
+        checkbox={false}
       />
 
       <CardSelection
@@ -139,6 +142,7 @@ const MobileForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={mobileNotifications}
+        checkbox={false}
       />
 
       <CardSelection
@@ -153,6 +157,7 @@ const MobileForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={mobileAnalytics}
+        checkbox={false}
       />
 
       <CardSelection
@@ -165,6 +170,7 @@ const MobileForm = props => {
         formPress={selectHandler}
         cardsCount={2}
         stateSelection={mobileAdmin}
+        checkbox={false}
       />
 
     </View>
