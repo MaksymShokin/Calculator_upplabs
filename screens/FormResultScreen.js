@@ -15,13 +15,12 @@ import Colors from '../constants/Colors';
 import UserForm from '../components/UserForm';
 import FormResult from '../components/FormResult';
 import * as userActions from '../store/actions/userActions';
-import {useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const FormResultScreen = props => {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState('user');
-  const time = props.route.params.time;
-
+  const time = useSelector(state => state.time.time);
   const dispatch = useDispatch();
 
   const formSwitch = formToShow => {
@@ -45,7 +44,6 @@ const FormResultScreen = props => {
         setForm('result');
       }
     } catch (error) {
-      console.log('error',error)
       throw new Error(error)
     }
   };
@@ -77,7 +75,8 @@ const FormResultScreen = props => {
         keyboardVerticalOffset={100}
       >
         <ScrollView>
-          {form === 'user' ? <UserForm formSwitch={formSwitch}/> : <FormResult time={time} navigation={props.navigation}/>}
+          {form === 'user' ? <UserForm formSwitch={formSwitch}/> :
+            <FormResult time={time} navigation={props.navigation}/>}
         </ScrollView>
       </KeyboardAvoidingView>
     </LinearGradient>

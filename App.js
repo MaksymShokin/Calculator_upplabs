@@ -4,6 +4,7 @@ import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import userReducer from './store/reducers/userReducer';
 import formReducer from './store/reducers/formReducer';
+import timeReducer from './store/reducers/timeReducer';
 import {
   applyMiddleware,
   combineReducers,
@@ -14,7 +15,8 @@ import { Provider } from 'react-redux';
 
 const rootReducer = combineReducers({
   user: userReducer,
-  form: formReducer
+  form: formReducer,
+  time: timeReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

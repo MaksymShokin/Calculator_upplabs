@@ -41,11 +41,8 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  console.log(action)
   switch (action.type) {
-
     case RESET_FORM:
-      console.log(initialState)
       return initialState;
     case SAVE_FORM_OPTION:
       switch (action.field) {

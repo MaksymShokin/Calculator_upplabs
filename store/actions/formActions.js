@@ -10,7 +10,6 @@ export const saveFormOption = (field, value) => {
 };
 
 export const resetForm = () => {
-  console.log('reset');
   return {
     type: RESET_FORM
   }

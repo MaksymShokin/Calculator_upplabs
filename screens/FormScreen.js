@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useCallback
+} from 'react';
 import {
   View,
   StyleSheet,
@@ -7,6 +9,7 @@ import {
   Dimensions
 } from 'react-native';
 
+import { useFocusEffect } from '@react-navigation/native';
 import DefaultText from '../components/DefaultText';
 import Card from '../components/Card';
 import Colors from '../constants/Colors';
@@ -18,10 +21,18 @@ import {
   useDispatch
 } from 'react-redux';
 import * as formActions from '../store/actions/formActions';
+import * as timeActions from '../store/actions/timeActions';
 
 const FormScreen = props => {
   const dispatch = useDispatch();
   const formData = useSelector(state => state.form);
+  const time = useSelector(state => state.time.time);
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(timeActions.resetTime())
+    }, [])
+  );
 
   const platform = formData.platform;
 
@@ -54,9 +65,11 @@ const FormScreen = props => {
     dispatch(formActions.saveFormOption(field, value));
   };
 
-  const navigateToFormResult = platform => {
-    let time = 30;
+  const addTime = value => {
+    dispatch(timeActions.addTime(value))
+  };
 
+  const navigateToFormResult = platform => {
     if (platform === 'mobile') {
       const allValues = [
         mobilePlatform,
@@ -71,26 +84,26 @@ const FormScreen = props => {
 
       Object.entries(mobileContent).forEach(elem => {
         if (elem[1]) {
-          time += 15
+          addTime(15)
         }
       });
 
       Object.entries(mobileDevices).forEach(elem => {
         if (elem[1]) {
-          time += 25
+          addTime(25)
         }
       });
 
       allValues.forEach(elem => {
         if (
-          elem === 'IOS' ||
+          elem === 'ios' ||
           elem === 'android' ||
           elem === 'basic' ||
           elem === 'simple' ||
           elem === 'viaEmail' ||
           elem === 'basic'
         ) {
-          time += 15
+          addTime(15)
         } else if (
           elem === 'both' ||
           elem === 'advanced' ||
@@ -98,7 +111,7 @@ const FormScreen = props => {
           elem === 'yes' ||
           elem === 'custom'
         ) {
-          time += 30
+          addTime(30)
         }
       })
     } else if (platform === 'web') {
@@ -120,22 +133,19 @@ const FormScreen = props => {
           elem === 'basic' ||
           elem === 'simple'
         ) {
-          time += 20
+          addTime(20)
         } else if (
           elem === 'advanced' ||
           elem === 'emailPush' ||
           elem === 'yes'
         ) {
-          time += 35
+          addTime(35)
         }
       })
     }
 
     props.navigation.navigate({
-      name: 'FormResultScreen',
-      params: {
-        time: time
-      }
+      name: 'FormResultScreen'
     })
   };
 
