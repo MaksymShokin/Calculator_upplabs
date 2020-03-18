@@ -2,7 +2,8 @@ export const saveDataToDatabase = () => {
   return async (dispatch, getState) => {
     const formData = getState().form;
     const userData = getState().user;
-    const time = getState().time;
+    const time = getState().time.time;
+    const date = new Date();
 
     let formDataPlatformSlice;
 
@@ -23,7 +24,8 @@ export const saveDataToDatabase = () => {
           platform: formData.platform,
           form: formDataPlatformSlice,
           user: userData,
-          time: time
+          time: time,
+          date: date.toISOString()
         })
       }
     );
@@ -38,4 +40,28 @@ export const saveDataToDatabase = () => {
     // const resData = await response.json();
     // console.log(resData);
   };
+};
+
+export const fetchFromDatabase = () => {
+  return async (dispatch, getState) => {
+    try {
+      const {firstName, lastName} = getState().user;
+      console.log(firstName, lastName)
+      if (!firstName && !lastName) {
+        return;
+      }
+
+      const response = await fetch(`https://calculator-upplabs.firebaseio.com/calculator/${firstName} ${lastName}.json`);
+      const resData = await response.json();
+
+      if (!response.ok) {
+        throw new Error('something wrong')
+      }
+
+      return resData
+    } catch (error) {
+      throw error
+    }
+  }
+
 };

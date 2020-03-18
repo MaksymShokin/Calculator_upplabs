@@ -1,11 +1,8 @@
 import React from 'react';
 import {
   View,
-  TouchableOpacity,
-  Image,
   SafeAreaView,
-  StyleSheet,
-  Button
+  StyleSheet
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -29,10 +26,11 @@ import SearchHistoryScreen, {
 } from '../screens/SearchHistoryScreen';
 import Colors from '../constants/Colors';
 import CustomButton from '../components/CustomButton';
+import CustomIcon from '../components/CustomIcon';
 
 const defaultNavigationOptions = {
   headerStyle: {
-    backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : 'white'
+    backgroundColor: Colors.primaryColor
   },
   headerTitleStyle: {
     fontFamily: 'raleway'
@@ -40,16 +38,8 @@ const defaultNavigationOptions = {
   headerBackTitleStyle: {
     fontFamily: 'raleway-bold'
   },
-  headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
-  headerRight: () => (
-    <TouchableOpacity onPress={() => Linking.openURL('https://www.upplabs.com/')}>
-      <Image
-        source={Platform.OS === 'android' ? require('../assets/images/logos/icon-black.jpg') : require('../assets/images/logos/icon.jpg')}
-        resizeMode='cover'
-        style={styles.image}
-      />
-    </TouchableOpacity>
-  )
+  headerTintColor: 'white',
+  headerRight: () => <CustomIcon/>
 };
 
 const FormStack = createStackNavigator();
@@ -191,11 +181,6 @@ const MainAppNavigator = props => {
 };
 
 const styles = StyleSheet.create({
-  image: {
-    width: 45,
-    height: 45,
-    borderRadius: 30
-  },
   drawerButtonContainer: {
     marginHorizontal: 10,
     marginTop: 30

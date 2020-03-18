@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height * 0.65,
     width: '100%',
     paddingVertical: 20,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     backgroundColor: Colors.primaryColor,
     justifyContent: 'center'
   },

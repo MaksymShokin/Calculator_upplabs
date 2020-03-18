@@ -22,6 +22,7 @@ const FormResultScreen = props => {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState('user');
   const time = useSelector(state => state.time.time);
+  const userData = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const formSwitch = formToShow => {
@@ -50,12 +51,15 @@ const FormResultScreen = props => {
   };
 
   useEffect(() => {
-    fetchUserDataFromStorage().then(function(result) {
-      if (result) {
-        dispatch(database.saveDataToDatabase());
-      }
-    });
     setLoading(true);
+
+    if (userData) {
+      fetchUserDataFromStorage().then(function(result) {
+        if (result) {
+          dispatch(database.saveDataToDatabase());
+        }
+      });
+    }
 
     const setSpinner = () => {
       setLoading(false)
