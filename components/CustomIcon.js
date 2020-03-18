@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Image,
   TouchableWithoutFeedback,
   StyleSheet
 } from 'react-native';
 import { Audio } from 'expo-av';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
+import * as audioActions from '../store/actions/audioActions';
 
 const CustomIcon = () => {
-  const [playingStatus, setPlayingStatus] = useState('notstarted');
-  const [soundOptions, setSoundOptions] = useState();
+  const dispatch = useDispatch();
+  const {playingStatus, soundOptions} = useSelector(state => state.audio);
 
   const source = require('../assets/music/the-animals-the-house-of-the-rising-sun.mp3');
 
   const playAudio = async () => {
-    const {sound} = await Audio.Sound.createAsync(
+    const { sound } = await Audio.Sound.createAsync(
       source,
       {
         shouldPlay: true,
@@ -21,15 +26,15 @@ const CustomIcon = () => {
       },
       updateScreenForSoundStatus
     );
-    setSoundOptions(sound);
-    setPlayingStatus('playing')
+    dispatch(audioActions.setSound(sound));
+    dispatch(audioActions.setAudio('playing'))
   };
 
   const updateScreenForSoundStatus = (status) => {
     if (status.isPlaying && playingStatus !== 'playing') {
-      setPlayingStatus('playing');
+      dispatch(audioActions.setAudio('playing'))
     } else if (!status.isPlaying && playingStatus === 'playing') {
-      setPlayingStatus('paused');
+      dispatch(audioActions.setAudio('paused'))
     }
   };
 
@@ -37,17 +42,17 @@ const CustomIcon = () => {
     if (soundOptions != null) {
       if (playingStatus === 'playing') {
         await soundOptions.pauseAsync();
-        setPlayingStatus('paused')
+        dispatch(audioActions.setAudio('paused'))
       } else {
         await soundOptions.playAsync();
-        setPlayingStatus('playing')
+        dispatch(audioActions.setAudio('playing'))
       }
     }
   };
 
   const audioHandler = () => {
     switch (playingStatus) {
-      case 'notstarted':
+      case 'nosound':
         playAudio();
         break;
       case 'paused':

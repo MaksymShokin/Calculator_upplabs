@@ -5,6 +5,7 @@ import { AppLoading } from 'expo';
 import userReducer from './store/reducers/userReducer';
 import formReducer from './store/reducers/formReducer';
 import timeReducer from './store/reducers/timeReducer';
+import audioReducer from './store/reducers/audioReducer';
 import {
   applyMiddleware,
   combineReducers,
@@ -16,7 +17,8 @@ import { Provider } from 'react-redux';
 const rootReducer = combineReducers({
   user: userReducer,
   form: formReducer,
-  time: timeReducer
+  time: timeReducer,
+  audio: audioReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
