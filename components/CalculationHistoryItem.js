@@ -5,19 +5,29 @@ import {
   Button,
   StyleSheet
 } from 'react-native';
+import moment from 'moment';
 
 import Card from '../components/Card';
 import Colors from '../constants/Colors';
+import DefaultText from './DefaultText';
+import DefaultTextBold from './DefaultTextBold';
+import WebHistoryItem from './WebHistoryItem';
+import MobileHistoryItem from './MoblieHistoryItem';
 
 const CalculationHistoryItem = props => {
   const [showDetails, setShowDetails] = useState(false);
-  const {form, time, date} = props;
+  const {form, time, date, platform} = props;
+
+  const formattedDate = moment(date).format('MMMM Do YYYY, hh:mm');
+  const capitalize = str => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
   return (
-    <Card style={styles.orderItem}>
+    <Card style={styles.calcItem}>
       <View style={styles.summary}>
-        <Text style={styles.totalAmount}>${props.amount.toFixed(2)}</Text>
-        <Text style={styles.date}>{props.date}</Text>
+        <DefaultTextBold style={styles.time}>Total time: {time}</DefaultTextBold>
+        <DefaultText style={styles.date}>{formattedDate}</DefaultText>
       </View>
       <Button
         color={Colors.primaryColor}
@@ -27,10 +37,10 @@ const CalculationHistoryItem = props => {
         }}
       />
       {showDetails && (
-        <View style={styles.detailItems}>
-          {/*{props.items.map(cartItem => (*/}
-
-          {/*))}*/}
+        <View style={styles.itemsDetails}>
+          <DefaultTextBold style={styles.platformText}>Platform: {capitalize(platform)}</DefaultTextBold>
+          {platform === 'mobile' && <MobileHistoryItem form={form} date={date}/>}
+          {platform === 'web' && <WebHistoryItem form={form} date={date}/>}
         </View>
       )}
     </Card>
@@ -38,7 +48,7 @@ const CalculationHistoryItem = props => {
 };
 
 const styles = StyleSheet.create({
-  orderItem: {
+  calcItem: {
     margin: 20,
     padding: 10,
     alignItems: 'center'
@@ -50,17 +60,19 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 15
   },
-  totalAmount: {
-    fontFamily: 'open-sans-bold',
+  time: {
     fontSize: 16
   },
   date: {
     fontSize: 16,
-    fontFamily: 'open-sans',
     color: '#888'
   },
-  detailItems: {
+  itemsDetails: {
+    marginTop: 15,
     width: '100%'
+  },
+  platformText: {
+    fontSize: 16
   }
 });
 

@@ -9,7 +9,6 @@ import {
   AsyncStorage,
   FlatList
 } from 'react-native';
-import DefaultText from '../components/DefaultText';
 import {
   HeaderButtons,
   Item
@@ -25,12 +24,11 @@ import * as userActions from '../store/actions/userActions';
 import DefaultTextBold from '../components/DefaultTextBold';
 import CalculationHistoryItem from '../components/CalculationHistoryItem';
 
-
 const SearchHistoryScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [calculations, setCalculations] = useState([]);
   const dispatch = useDispatch();
   const userData = useSelector(state => state.user);
-  const [calculations, setCalculations] = useState([]);
 
   const fetchUserDataFromStorage = async () => {
     try {
@@ -39,7 +37,6 @@ const SearchHistoryScreen = () => {
 
       if (transformedData.hasOwnProperty('firstName')) {
         const {firstName, lastName, email, country, company} = transformedData;
-
         dispatch(userActions.saveUserData(firstName, lastName, email, country, company));
 
         return true
@@ -55,20 +52,22 @@ const SearchHistoryScreen = () => {
     if (!userData.firstName) {
       fetchUserDataFromStorage().then(function () {
         dispatch(database.fetchFromDatabase()).then(result => {
-          debugger
           if (result !== undefined) {
-            setCalculations(Object.entries(result));
+            let dataFromFirebase = Object.entries(result).map(elem => {
+              return elem[1]
+            });
+            setCalculations(dataFromFirebase)
           }
-          console.log(calculations)
         });
       });
     }
 
-
-
+    const setSpinner = () => {
       setIsLoading(false);
+    };
 
-  }, [dispatch]);
+    setTimeout(setSpinner, 500);
+  }, [dispatch, fetchUserDataFromStorage]);
 
   if (isLoading) {
     return (
@@ -78,7 +77,7 @@ const SearchHistoryScreen = () => {
     )
   }
 
-  if (calculations.length === 0) {
+  if (!isLoading && calculations.length === 0) {
     return (
       <View style={styles.screen}>
         <DefaultTextBold style={styles.placeholderText}>
@@ -91,18 +90,18 @@ const SearchHistoryScreen = () => {
   return (
     <FlatList
       data={calculations}
-      keyExtractor={item => item[0]}
+      keyExtractor={item => item.date}
       renderItem={itemData => (
         <CalculationHistoryItem
-          form={itemData.item[1]}
-          date={itemData.item[1].date.format('MMMM Do YYYY, hh:mm')}
-          time={itemData.item[1].time}
+          form={itemData.item.form}
+          date={itemData.item.date}
+          time={itemData.item.time}
+          platform={itemData.item.platform}
         />
       )}
     />
   )
 };
-
 
 export const screenOptions = navData => {
   return {
