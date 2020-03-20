@@ -16,7 +16,10 @@ import UserForm from '../components/UserForm';
 import FormResult from '../components/FormResult';
 import * as userActions from '../store/actions/userActions';
 import * as database from '../database/database';
-import { useSelector, useDispatch } from 'react-redux';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
 
 const FormResultScreen = props => {
   const [loading, setLoading] = useState(false);
@@ -33,32 +36,12 @@ const FormResultScreen = props => {
     }
   };
 
-  const fetchUserDataFromStorage = async () => {
-    try {
-      const userDataFormStorage = await AsyncStorage.getItem('userData');
-      const transformedData = JSON.parse(userDataFormStorage);
-
-      if (transformedData.hasOwnProperty('firstName')) {
-        const {firstName, lastName, email, country, company} = transformedData;
-
-        dispatch(userActions.saveUserData(firstName, lastName, email, country, company));
-        setForm('result');
-        return true
-      }
-    } catch (error) {
-      throw new Error(error)
-    }
-  };
-
   useEffect(() => {
     setLoading(true);
 
-    if (userData) {
-      fetchUserDataFromStorage().then(function(result) {
-        if (result) {
-          dispatch(database.saveDataToDatabase());
-        }
-      });
+    if (userData.firstName) {
+      dispatch(database.saveDataToDatabase());
+      setForm('result');
     }
 
     const setSpinner = () => {

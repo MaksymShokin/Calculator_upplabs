@@ -26,7 +26,6 @@ const UserForm = props => {
   const dispatch = useDispatch();
 
   const checkValidation = () => {
-    debugger
     if (!firstName) {
       onBlurHandler('firstName', firstName)
     }

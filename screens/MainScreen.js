@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect
+} from 'react';
 import {
   View,
   StyleSheet,
   Image,
-  ImageBackground,
   Dimensions,
-  ScrollView
+  ScrollView,
+  AsyncStorage,
+  ActivityIndicator
 } from 'react-native';
 import DefaultText from '../components/DefaultText';
 import DefaultTextBold from '../components/DefaultTextBold';
@@ -16,8 +20,53 @@ import {
   HeaderButtons,
   Item
 } from 'react-navigation-header-buttons';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
+import * as userActions from '../store/actions/userActions';
 
 const MainScreen = props => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.user);
+
+  const fetchUserDataFromStorage = async () => {
+    try {
+      const userDataFormStorage = await AsyncStorage.getItem('userData');
+      const transformedData = JSON.parse(userDataFormStorage);
+
+      if (transformedData.hasOwnProperty('firstName')) {
+        const {firstName, lastName, email, country, company} = transformedData;
+        dispatch(userActions.saveUserData(firstName, lastName, email, country, company));
+
+        return true
+      }
+    } catch (error) {
+      throw new Error(error)
+    }
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    if (!userData.firstName) {
+      fetchUserDataFromStorage();
+    }
+
+    // !userData.firstName &&
+
+    setIsLoading(false);
+  }, [dispatch]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingSpinner}>
+        <ActivityIndicator size='large' color={Colors.primary}/>
+      </View>
+    )
+  }
 
   return (
     <ScrollView>
@@ -56,7 +105,7 @@ const MainScreen = props => {
 
 export const screenOptions = navData => {
   return {
-    headerTitle: 'Our Services',
+    headerTitle: 'Upplabs',
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
@@ -74,6 +123,11 @@ export const screenOptions = navData => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center'
+  },
+  loadingSpinner: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center'
   },
   image: {

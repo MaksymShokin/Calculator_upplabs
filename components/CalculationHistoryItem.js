@@ -27,7 +27,9 @@ const CalculationHistoryItem = props => {
     <Card style={styles.calcItem}>
       <View style={styles.summary}>
         <DefaultTextBold style={styles.time}>Total time: {time}</DefaultTextBold>
-        <DefaultText style={styles.date}>{formattedDate}</DefaultText>
+        <View style={styles.dateContainer}>
+          <DefaultText style={styles.date}>{formattedDate}</DefaultText>
+        </View>
       </View>
       <Button
         color={Colors.primaryColor}
@@ -62,6 +64,11 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 16
+  },
+  dateContainer: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    width: '50%'
   },
   date: {
     fontSize: 16,

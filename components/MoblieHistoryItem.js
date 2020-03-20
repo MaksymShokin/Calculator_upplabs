@@ -1,13 +1,14 @@
 import React from 'react'
 import {
   View,
-  StyleSheet
+  StyleSheet,
+  Dimensions
 } from 'react-native';
 import DefaultText from './DefaultText';
 
 const MobileHistoryItem = props => {
-  const {form, date} = props;
-debugger
+  const {form, date, fromFormResult} = props;
+
   const convertedForm = Object.keys(form).map(key => {
     if (key === 'mobileDevices' || key === 'mobileContent') {
       let values = [];
@@ -35,25 +36,33 @@ debugger
         <View style={styles.formItemTitleContainer}>
           <DefaultText>{removePrefix(elem[0])}: </DefaultText>
         </View>
-        <View>
+        <View style={styles.formItemTextContainer}>
           <DefaultText>{capitalize(elem[1])}</DefaultText>
         </View>
       </View>
     )
   });
   return (
-    <View>
+    <View style={fromFormResult && styles.container}>
       {mainContent}
     </View>
   )
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: Dimensions.get('window').width * 0.9
+  },
   formItem: {
     flexDirection: 'row'
   },
   formItemTitleContainer: {
     width: '45%'
+  },
+  formItemTextContainer: {
+    width: '50%',
+    flexWrap: 'wrap',
+    flexDirection: 'row'
   }
 });
 

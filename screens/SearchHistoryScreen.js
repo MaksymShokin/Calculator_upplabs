@@ -6,7 +6,6 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
-  AsyncStorage,
   FlatList
 } from 'react-native';
 import {
@@ -20,7 +19,6 @@ import {
   useSelector
 } from 'react-redux';
 import Colors from '../constants/Colors';
-import * as userActions from '../store/actions/userActions';
 import DefaultTextBold from '../components/DefaultTextBold';
 import CalculationHistoryItem from '../components/CalculationHistoryItem';
 
@@ -29,49 +27,29 @@ const SearchHistoryScreen = () => {
   const [calculations, setCalculations] = useState([]);
   const dispatch = useDispatch();
   const userData = useSelector(state => state.user);
-
-  const fetchUserDataFromStorage = async () => {
-    try {
-      const userDataFormStorage = await AsyncStorage.getItem('userData');
-      const transformedData = JSON.parse(userDataFormStorage);
-
-      if (transformedData.hasOwnProperty('firstName')) {
-        const {firstName, lastName, email, country, company} = transformedData;
-        dispatch(userActions.saveUserData(firstName, lastName, email, country, company));
-
-        return true
-      }
-    } catch (error) {
-      throw new Error(error)
-    }
-  };
+  const newForm = useSelector(state => state.form);
 
   useEffect(() => {
     setIsLoading(true);
 
-    if (!userData.firstName) {
-      fetchUserDataFromStorage().then(function () {
-        dispatch(database.fetchFromDatabase()).then(result => {
-          if (result !== undefined) {
-            let dataFromFirebase = Object.entries(result).map(elem => {
-              return elem[1]
-            });
-            setCalculations(dataFromFirebase)
-          }
-        });
+    if (userData.firstName) {
+      dispatch(database.fetchFromDatabase()).then(result => {
+        if (result !== undefined) {
+          let dataFromFirebase = Object.entries(result).map(elem => {
+            return elem[1]
+          });
+          setCalculations(dataFromFirebase)
+        }
       });
     }
 
-    const setSpinner = () => {
-      setIsLoading(false);
-    };
+    setIsLoading(false);
 
-    setTimeout(setSpinner, 500);
-  }, [dispatch, fetchUserDataFromStorage]);
+  }, [dispatch, newForm]);
 
   if (isLoading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={styles.screen}>
         <ActivityIndicator size='large' color={Colors.primary}/>
       </View>
     )

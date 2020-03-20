@@ -3,19 +3,32 @@ import {
   Dimensions,
   Image,
   View,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity,
+  Platform
 } from 'react-native';
 import DefaultText from './DefaultText';
 import CustomButton from './CustomButton';
 import * as formActions from '../store/actions/formActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Ionicons } from '@expo/vector-icons';
+import DefaultTextBold from './DefaultTextBold';
+import MobileHistoryItem from './MoblieHistoryItem';
+import WebHistoryItem from './WebHistoryItem';
 
 const FormResult = props => {
   const dispatch = useDispatch();
+  const {platform, web, mobile} = useSelector(state => state.form);
+  const date = new Date();
 
   const calculateAgain = () => {
     dispatch(formActions.resetForm());
     props.navigation.navigate('FormScreen')
+  };
+
+  const NavigateToHomeScreen = () => {
+    dispatch(formActions.resetForm());
+    props.navigation.navigate('MainScreen')
   };
 
   return (
@@ -24,13 +37,27 @@ const FormResult = props => {
         style={styles.logo}
         source={require('../assets/images/logos/coding.jpg')}
       />
+
+      <View style={styles.textContainer}>
+        <View style={styles.header}>
+          <DefaultTextBold style={styles.headerText}>Your app specifications</DefaultTextBold>
+          <View style={styles.appContainer}>
+            {platform === 'mobile' && <MobileHistoryItem form={mobile} date={date} fromFormResult={true}/>}
+            {platform === 'web' && <WebHistoryItem form={web} date={date} fromFormResult={true}/>}
+          </View>
+        </View>
+      </View>
+
       <View style={styles.textContainer}>
         <DefaultText style={styles.text}>
           Approximately it will take {props.time} working hours to create such an app.
           Of course this number it is rough estimation, but it can give an idea regarding complexity of an app.
           If you would like to receive more consultation please contact us.
         </DefaultText>
-        <View style={styles.buttonsContainer}>
+      </View>
+
+      <View style={styles.buttonsContainer}>
+        <View style={styles.buttonsRow}>
           <View style={styles.button}>
             <CustomButton
               text='Contact us!'
@@ -39,14 +66,33 @@ const FormResult = props => {
               }}
             />
           </View>
+          <TouchableOpacity onPress={NavigateToHomeScreen}>
+            <View style={styles.iconContainer}>
+              <Ionicons
+                name={Platform.OS === 'android' ? 'md-home' : 'ios-home'}
+                size={40}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.buttonsRow}>
           <View style={styles.button}>
             <CustomButton
               text='Calculate again!'
               onPress={calculateAgain}
             />
           </View>
+          <TouchableOpacity>
+            <View style={styles.iconContainer}>
+              <Ionicons
+                name={Platform.OS === 'android' ? 'md-save' : 'ios-save'}
+                size={40}
+              />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
+
     </View>
   )
 };
@@ -72,17 +118,37 @@ const styles = StyleSheet.create({
   textContainer: {
     margin: 15
   },
+  header: {
+    textAlign: 'center'
+  },
+  appContainer: {
+    width: '100%',
+    marginTop: 10
+  },
+  headerText: {
+    fontSize: 20
+  },
   text: {
     fontSize: 18
   },
   buttonsContainer: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 15
+    marginTop: 15,
+    marginBottom: 50
+  },
+  buttonsRow: {
+    flexDirection: 'row',
   },
   button: {
     marginVertical: 10,
-    width: Dimensions.get('window').width * 0.7
+    width: Dimensions.get('window').width * 0.6
+  },
+  iconContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    marginLeft: 20
   }
 });
 

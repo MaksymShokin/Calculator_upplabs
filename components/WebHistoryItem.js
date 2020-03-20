@@ -1,12 +1,13 @@
 import React from 'react'
 import {
   View,
+  Dimensions,
   StyleSheet
 } from 'react-native';
 import DefaultText from './DefaultText';
 
 const WebHistoryItem = props => {
-  const {form, date} = props;
+  const {form, date, fromFormResult} = props;
 
   const convertedForm = Object.keys(form).map(key => {
     return [String(key), form[key]];
@@ -34,13 +35,16 @@ const WebHistoryItem = props => {
   });
 
   return (
-    <View>
+    <View style={fromFormResult && styles.container}>
       {mainContent}
     </View>
   )
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: Dimensions.get('window').width * 0.9
+  },
   formItem: {
     flexDirection: 'row'
   },
