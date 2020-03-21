@@ -46,7 +46,7 @@ export const fetchFromDatabase = () => {
   return async (dispatch, getState) => {
     try {
       const {firstName, lastName} = getState().user;
-      console.log(firstName, lastName)
+
       if (!firstName && !lastName) {
         return;
       }

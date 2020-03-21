@@ -9,7 +9,8 @@ import {
   Dimensions,
   ScrollView,
   AsyncStorage,
-  ActivityIndicator
+  ActivityIndicator,
+  ImageBackground
 } from 'react-native';
 import DefaultText from '../components/DefaultText';
 import DefaultTextBold from '../components/DefaultTextBold';
@@ -25,6 +26,7 @@ import {
   useSelector
 } from 'react-redux';
 import * as userActions from '../store/actions/userActions';
+import Animation from '../components/Animation'
 
 const MainScreen = props => {
   const [isLoading, setIsLoading] = useState(false);
@@ -55,8 +57,6 @@ const MainScreen = props => {
       fetchUserDataFromStorage();
     }
 
-    // !userData.firstName &&
-
     setIsLoading(false);
   }, [dispatch]);
 
@@ -71,13 +71,12 @@ const MainScreen = props => {
   return (
     <ScrollView>
       <View style={styles.container}>
-
-        <View style={styles.logoContainer}>
-          <Image
-            source={require('../assets/images/logos/logo-white.png')}
-            style={styles.image}
-            resizeMode='contain'
-          />
+        <View style={styles.animationContainer}>
+          <ImageBackground
+            source={require('../assets/images/wood3.jpg')} style={styles.image}
+          >
+            <Animation/>
+          </ImageBackground>
         </View>
 
         <View style={styles.calcContainer}>
@@ -125,6 +124,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center'
   },
+  animationContainer: {
+    height: 350,
+    width: '100%'
+  },
   loadingSpinner: {
     flex: 1,
     justifyContent: 'center',
@@ -134,18 +137,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%'
   },
-  logoContainer: {
-    width: '90%',
-    height: Dimensions.get('window').height * 0.25,
-    overflow: 'hidden'
-  },
   calcContainer: {
-    height: Dimensions.get('window').height * 0.65,
+    height: Dimensions.get('window').height * 0.60,
     width: '100%',
     paddingVertical: 20,
     paddingHorizontal: 20,
     backgroundColor: Colors.primaryColor,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    borderTopWidth: 1
   },
   calcTitle: {
     fontSize: 30,

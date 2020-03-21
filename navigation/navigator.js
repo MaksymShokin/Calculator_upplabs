@@ -24,9 +24,13 @@ import ContactsScreen, {
 import SearchHistoryScreen, {
   screenOptions as SearchHistoryScreenOptions
 } from '../screens/SearchHistoryScreen';
+import UserScreen, {
+  screenOptions as UserScreenOptions
+} from '../screens/UserScreen';
 import Colors from '../constants/Colors';
 import CustomButton from '../components/CustomButton';
 import CustomIcon from '../components/CustomIcon';
+
 
 const defaultNavigationOptions = {
   headerStyle: {
@@ -105,6 +109,20 @@ const HistoryStackNavigator = () => {
   );
 };
 
+const UserStack = createStackNavigator();
+
+const UserStackNavigator = () => {
+  return (
+    <UserStack.Navigator screenOptions={defaultNavigationOptions}>
+      <UserStack.Screen
+        name="UserScreen"
+        component={UserScreen}
+        options={UserScreenOptions}
+      />
+    </UserStack.Navigator>
+  );
+};
+
 const MainDrawer = createDrawerNavigator();
 
 const MainNavigator = () => {
@@ -163,6 +181,18 @@ const MainNavigator = () => {
           drawerIcon: drawerConfig => (
             <Ionicons
               name={Platform.OS === 'android' ? 'md-contacts' : 'ios-contacts'}
+              size={23}
+            />
+          )
+        }}
+      />
+      <MainDrawer.Screen
+        name="User"
+        component={UserStackNavigator}
+        options={{
+          drawerIcon: drawerConfig => (
+            <Ionicons
+              name={Platform.OS === 'android' ? 'md-person' : 'ios-person'}
               size={23}
             />
           )

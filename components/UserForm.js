@@ -14,16 +14,19 @@ import {
 
 import * as userActions from '../store/actions/userActions';
 import * as database from '../database/database';
+import DefaultText from './DefaultText';
 
 const UserForm = props => {
+  const {title, navigate} = props;
   const [firstNameError, setFirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [countryError, setCountryError] = useState('');
+  const [saving, setSaving] = useState(false);
 
   const {firstName, lastName, email, country, company} = useSelector(state => state.user);
-
   const dispatch = useDispatch();
+
 
   const checkValidation = () => {
     if (!firstName) {
@@ -53,8 +56,12 @@ const UserForm = props => {
       );
     } else {
       dispatch(userActions.saveUserData(firstName, lastName, email, country, company));
-      dispatch(database.saveDataToDatabase());
-      props.formSwitch('result')
+      navigate && dispatch(database.saveDataToDatabase());
+      setSaving(true);
+      setTimeout(() => {
+        setSaving(false)
+      }, 2000);
+      navigate && props.formSwitch('result')
     }
   };
 
@@ -85,7 +92,7 @@ const UserForm = props => {
   return (
     <View style={styles.screen}>
       <DefaultTextBold style={styles.title}>
-        Please fill in quick form!
+        {title}
       </DefaultTextBold>
       <CustomInput
         label='First name'
@@ -131,6 +138,9 @@ const UserForm = props => {
           style={styles.button}
           onPress={checkValidation}
         />
+        {saving && <View style={styles.saveContainer}>
+          <DefaultText>Saved!</DefaultText>
+        </View>}
       </View>
     </View>
   )
@@ -148,6 +158,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginVertical: 15
+  },
+  saveContainer: {
+    marginTop: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 

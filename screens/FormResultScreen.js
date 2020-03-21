@@ -7,14 +7,12 @@ import {
   StyleSheet,
   ActivityIndicator,
   ScrollView,
-  AsyncStorage,
   KeyboardAvoidingView
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
 import UserForm from '../components/UserForm';
 import FormResult from '../components/FormResult';
-import * as userActions from '../store/actions/userActions';
 import * as database from '../database/database';
 import {
   useSelector,
@@ -25,7 +23,7 @@ const FormResultScreen = props => {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState('user');
   const time = useSelector(state => state.time.time);
-  const userData = useSelector(state => state.user);
+  const {firstName, lastName, country, email} = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const formSwitch = formToShow => {
@@ -39,7 +37,7 @@ const FormResultScreen = props => {
   useEffect(() => {
     setLoading(true);
 
-    if (userData.firstName) {
+    if (firstName && lastName && country && email) {
       dispatch(database.saveDataToDatabase());
       setForm('result');
     }
@@ -67,7 +65,7 @@ const FormResultScreen = props => {
         keyboardVerticalOffset={100}
       >
         <ScrollView>
-          {form === 'user' ? <UserForm formSwitch={formSwitch}/> :
+          {form === 'user' ? <UserForm formSwitch={formSwitch} title='Please fill in quick form!' navigate={true}/> :
             <FormResult time={time} navigation={props.navigation}/>}
         </ScrollView>
       </KeyboardAvoidingView>
