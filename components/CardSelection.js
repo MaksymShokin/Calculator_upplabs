@@ -34,7 +34,10 @@ const FormSelection = props => {
 
   return (
     <View style={styles.selectionContainer}>
-      <DefaultText>{mainTitle}</DefaultText>
+      <View style={styles.mainTitleContainer}>
+        <DefaultText>{mainTitle}</DefaultText>
+      </View>
+
       <View style={styles.smallCardsContainer}>
         <TouchableOpacity onPress={() => formPress(field, valueOne)}>
           <Card style={selectorOne ? styles.smallSelectedCard : styles.smallCard}>
@@ -73,6 +76,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     marginTop: 20
+  },
+  mainTitleContainer: {
+    paddingHorizontal: 10
   },
   bigContainer: {
     width: '100%',

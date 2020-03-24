@@ -59,16 +59,16 @@ const FormResultScreen = props => {
 
   return (
     <LinearGradient colors={['#ebdb34', '#ebb734', '#a67702']} style={styles.linearGradient}>
-      <KeyboardAvoidingView
-        style={{flex: 1}}
-        behavior="padding"
-        keyboardVerticalOffset={100}
-      >
-        <ScrollView>
+      <ScrollView>
+        <KeyboardAvoidingView
+          style={{flex: 1}}
+          behavior="padding"
+          keyboardVerticalOffset={100}
+        >
           {form === 'user' ? <UserForm formSwitch={formSwitch} title='Please fill in quick form!' navigate={true}/> :
             <FormResult time={time} navigation={props.navigation}/>}
-        </ScrollView>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </ScrollView>
     </LinearGradient>
   )
 };

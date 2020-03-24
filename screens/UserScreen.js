@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import {
   StyleSheet,
   KeyboardAvoidingView,
-  ScrollView,
-  Alert
+  ScrollView
 } from 'react-native';
 import UserForm from '../components/UserForm';
 import {
@@ -29,19 +28,8 @@ const UserScreen = props => {
             title="Menu"
             iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
             onPress={() => {
-              if (!firstName || !lastName || !email || !country) {
-                Alert.alert(
-                  'Please fill in form',
-                  'Check for error and empty fields',
-                  [
-                    {text: 'OK'},
-                  ],
-                  {cancelable: false},
-                );
-              } else {
-                dispatch(userActions.saveUserData(firstName, lastName, email, country, company));
-                props.navigation.toggleDrawer();
-              }
+              dispatch(userActions.saveUserData(firstName, lastName, email, country, company));
+              props.navigation.toggleDrawer();
             }}
           />
         </HeaderButtons>
@@ -50,15 +38,15 @@ const UserScreen = props => {
   });
 
   return (
-    <KeyboardAvoidingView
-      style={{flex: 1}}
-      behavior="padding"
-      keyboardVerticalOffset={100}
-    >
-      <ScrollView>
+    <ScrollView>
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior="padding"
+        keyboardVerticalOffset={100}
+      >
         <UserForm title='Please enter your details' navigate={false}/>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ScrollView>
   )
 };
 
