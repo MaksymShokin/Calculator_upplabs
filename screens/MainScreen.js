@@ -105,6 +105,10 @@ const MainScreen = props => {
 export const screenOptions = navData => {
   return {
     headerTitle: 'Upplabs',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize: 20
+    },
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item

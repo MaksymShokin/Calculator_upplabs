@@ -68,7 +68,9 @@ const FormStackNavigator = () => {
       <FormStack.Screen
         name="FormResultScreen"
         component={FormResultScreen}
-        options={{}}
+        options={{
+          headerTitle: 'Calculation result'
+        }}
       />
       <FormStack.Screen
         name="ContactsScreen"

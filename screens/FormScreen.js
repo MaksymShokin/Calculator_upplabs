@@ -46,7 +46,8 @@ const FormScreen = props => {
     mobileNotifications,
     mobilePayments,
     mobileContent,
-    mobileAnalytics
+    mobileAnalytics,
+    mobileItems
   } = formData.mobile;
 
   const {
@@ -58,7 +59,9 @@ const FormScreen = props => {
     webSecurity,
     webCommunication,
     webPayment,
-    webPermissions
+    webPermissions,
+    webIntegration,
+    webItems
   } = formData.web;
 
   const selectHandler = (field, value) => {
@@ -79,7 +82,8 @@ const FormScreen = props => {
         mobileAdmin,
         mobileNotifications,
         mobilePayments,
-        mobileAnalytics
+        mobileAnalytics,
+        mobileItems
       ];
 
       Object.entries(mobileContent).forEach(elem => {
@@ -111,7 +115,7 @@ const FormScreen = props => {
           elem === 'yes' ||
           elem === 'custom'
         ) {
-          addTime(30)
+          addTime(25)
         }
       })
     } else if (platform === 'web') {
@@ -124,7 +128,9 @@ const FormScreen = props => {
         webLanguages,
         webGeolocation,
         webCommunication,
-        webDesign
+        webDesign,
+        webItems,
+        webIntegration
       ];
 
       allValues.forEach(elem => {
@@ -133,13 +139,13 @@ const FormScreen = props => {
           elem === 'basic' ||
           elem === 'simple'
         ) {
-          addTime(20)
+          addTime(15)
         } else if (
           elem === 'advanced' ||
           elem === 'emailPush' ||
           elem === 'yes'
         ) {
-          addTime(35)
+          addTime(25)
         }
       })
     }
@@ -164,6 +170,7 @@ const FormScreen = props => {
         mobilePayments={mobilePayments}
         mobileContent={mobileContent}
         mobileAnalytics={mobileAnalytics}
+        mobileItems={mobileItems}
         selectHandler={selectHandler}
       />
     )
@@ -180,6 +187,8 @@ const FormScreen = props => {
         webCommunication={webCommunication}
         webPayment={webPayment}
         webPermissions={webPermissions}
+        webIntegration={webIntegration}
+        webItems={webItems}
         selectHandler={selectHandler}
       />
     )
@@ -197,7 +206,8 @@ const FormScreen = props => {
     mobileAuthentication &&
     mobileDesign &&
     mobileNotifications &&
-    mobilePlatform) {
+    mobilePlatform &&
+    mobileItems) {
     mobileSubmitButton = (
       <CustomButton
         text='Calculate estimations!'
@@ -217,7 +227,9 @@ const FormScreen = props => {
     webParcing &&
     webPayment &&
     webPermissions &&
-    webSecurity) {
+    webIntegration &&
+    webSecurity &&
+    webItems) {
     webSubmitButton = (
       <CustomButton
         text='Calculate estimations!'

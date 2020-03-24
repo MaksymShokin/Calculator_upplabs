@@ -10,7 +10,10 @@ import {
 import DefaultText from './DefaultText';
 import CustomButton from './CustomButton';
 import * as formActions from '../store/actions/formActions';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import DefaultTextBold from './DefaultTextBold';
 import MobileHistoryItem from './MoblieHistoryItem';
@@ -38,14 +41,12 @@ const FormResult = props => {
         source={require('../assets/images/logos/coding.jpg')}
       />
 
-      <View style={styles.textContainer}>
+      <View style={styles.appContainer}>
         <View style={styles.header}>
           <DefaultTextBold style={styles.headerText}>Your app specifications</DefaultTextBold>
-          <View style={styles.appContainer}>
-            {platform === 'mobile' && <MobileHistoryItem form={mobile} date={date} fromFormResult={true}/>}
-            {platform === 'web' && <WebHistoryItem form={web} date={date} fromFormResult={true}/>}
-          </View>
         </View>
+        {platform === 'mobile' && <MobileHistoryItem form={mobile} date={date} fromFormResult={true}/>}
+        {platform === 'web' && <WebHistoryItem form={web} date={date} fromFormResult={true}/>}
       </View>
 
       <View style={styles.textContainer}>
@@ -76,20 +77,12 @@ const FormResult = props => {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonsRow}>
-          <View style={styles.button}>
+          <View style={styles.calcButton}>
             <CustomButton
               text='Calculate again!'
               onPress={calculateAgain}
             />
           </View>
-          <TouchableOpacity>
-            <View style={styles.iconContainer}>
-              <Ionicons
-                name={Platform.OS === 'android' ? 'md-save' : 'ios-save'}
-                size={40}
-              />
-            </View>
-          </TouchableOpacity>
         </View>
       </View>
 
@@ -118,12 +111,13 @@ const styles = StyleSheet.create({
   textContainer: {
     margin: 15
   },
-  header: {
-    textAlign: 'center'
-  },
   appContainer: {
     width: '100%',
-    marginTop: 10
+    marginTop: 10,
+    alignItems: 'center'
+  },
+  header: {
+    marginVertical: 15
   },
   headerText: {
     fontSize: 20
@@ -139,10 +133,15 @@ const styles = StyleSheet.create({
   },
   buttonsRow: {
     flexDirection: 'row',
+    width: '80%',
+    justifyContent: 'space-around'
   },
   button: {
     marginVertical: 10,
     width: Dimensions.get('window').width * 0.6
+  },
+  calcButton: {
+    width: '100%'
   },
   iconContainer: {
     alignItems: 'center',

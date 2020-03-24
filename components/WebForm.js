@@ -17,6 +17,8 @@ const WebForm = props => {
     webCommunication,
     webPayment,
     webPermissions,
+    webIntegration,
+    webItems,
     selectHandler
   } = props;
 
@@ -40,10 +42,10 @@ const WebForm = props => {
       <CardSelection
         mainTitle='Do you need multilingual support?'
         field='webLanguages'
-        valueOne='basic'
-        valueTwo='advanced'
-        titleOne='Basic'
-        titleTwo='Advanced'
+        valueOne='yes'
+        valueTwo='no'
+        titleOne='Yes'
+        titleTwo='No'
         formPress={selectHandler}
         cardsCount={2}
         stateSelection={webLanguages}
@@ -62,6 +64,21 @@ const WebForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={webGeolocation}
+        checkbox={false}
+      />
+
+      <CardSelection
+        mainTitle='Will your project have any list of items?'
+        field='webItems'
+        valueOne='simple'
+        valueTwo='advanced'
+        valueThree='none'
+        titleOne='Simple'
+        titleTwo='Advanced (with filters, categories etc.)'
+        titleThree='None'
+        formPress={selectHandler}
+        cardsCount={3}
+        stateSelection={webItems}
         checkbox={false}
       />
 
@@ -92,6 +109,19 @@ const WebForm = props => {
         formPress={selectHandler}
         cardsCount={3}
         stateSelection={webParcing}
+        checkbox={false}
+      />
+
+      <CardSelection
+        mainTitle='Will you need to integrate your project with a mobile app in future?'
+        field='webIntegration'
+        valueOne='yes'
+        valueTwo='no'
+        titleOne='Yes'
+        titleTwo='No'
+        formPress={selectHandler}
+        cardsCount={2}
+        stateSelection={webIntegration}
         checkbox={false}
       />
 

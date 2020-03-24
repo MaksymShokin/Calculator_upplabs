@@ -14,7 +14,9 @@ const initialState = {
     webSecurity: '',
     webCommunication: '',
     webPayment: '',
-    webPermissions: ''
+    webPermissions: '',
+    webIntegration: '',
+    webItems: ''
   },
   mobile: {
     mobilePlatform: '',
@@ -36,7 +38,8 @@ const initialState = {
       audio: false,
       streaming: false
     },
-    mobileAnalytics: ''
+    mobileAnalytics: '',
+    mobileItems: ''
   }
 };
 
@@ -139,6 +142,14 @@ export default (state = initialState, action) => {
               mobileAnalytics: action.value
             }
           };
+        case 'mobileItems':
+          return {
+            ...state,
+            mobile: {
+              ...state.mobile,
+              mobileItems: action.value
+            }
+          };
         case 'webDesign':
           return {
             ...state,
@@ -209,6 +220,22 @@ export default (state = initialState, action) => {
             web: {
               ...state.web,
               webPermissions: action.value
+            }
+          };
+        case 'webIntegration':
+          return {
+            ...state,
+            web: {
+              ...state.web,
+              webIntegration: action.value
+            }
+          };
+        case 'webItems':
+          return {
+            ...state,
+            web: {
+              ...state.web,
+              webItems: action.value
             }
           };
         default:

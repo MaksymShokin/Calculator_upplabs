@@ -16,7 +16,6 @@ import {
   useSelector
 } from 'react-redux';
 import * as userActions from '../store/actions/userActions';
-import { LinearGradient } from 'expo-linear-gradient';
 
 const UserScreen = props => {
   const {firstName, lastName, email, country, company} = useSelector(state => state.user);
@@ -68,7 +67,6 @@ export const screenOptions = navData => {
     headerTitle: 'Your details'
   }
 };
-
 
 const styles = StyleSheet.create({
   linearGradient: {

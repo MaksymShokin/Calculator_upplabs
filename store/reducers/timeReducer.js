@@ -4,7 +4,7 @@ import {
 } from '../actions/timeActions';
 
 const initialState = {
-  time: 30
+  time: 50
 };
 
 export default (state = initialState, action) => {

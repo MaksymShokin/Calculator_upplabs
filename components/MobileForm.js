@@ -18,6 +18,7 @@ const MobileForm = props => {
     mobilePayments,
     mobileContent,
     mobileAnalytics,
+    mobileItems,
     selectHandler
   } = props;
 
@@ -85,6 +86,21 @@ const MobileForm = props => {
         cardsCount={4}
         stateSelection={mobileContent}
         checkbox={true}
+      />
+
+      <CardSelection
+        mainTitle='Will your project have any list of items?'
+        field='mobileItems'
+        valueOne='simple'
+        valueTwo='advanced'
+        valueThree='none'
+        titleOne='Simple'
+        titleTwo='Advanced (with filters, categories etc.)'
+        titleThree='None'
+        formPress={selectHandler}
+        cardsCount={3}
+        stateSelection={mobileItems}
+        checkbox={false}
       />
 
       <CardSelection
