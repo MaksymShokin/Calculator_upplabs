@@ -57,8 +57,8 @@ const FormResult = props => {
         </DefaultText>
       </View>
 
-      <View style={styles.buttonsContainer}>
-        <View style={styles.buttonsRow}>
+      <View style={styles.navigationContainer}>
+        <View style={styles.buttonsContainer}>
           <View style={styles.button}>
             <CustomButton
               text='Contact us!'
@@ -67,23 +67,22 @@ const FormResult = props => {
               }}
             />
           </View>
-          <TouchableOpacity onPress={NavigateToHomeScreen}>
-            <View style={styles.iconContainer}>
-              <Ionicons
-                name={Platform.OS === 'android' ? 'md-home' : 'ios-home'}
-                size={40}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonsRow}>
-          <View style={styles.calcButton}>
+          <View style={styles.button}>
             <CustomButton
               text='Calculate again!'
               onPress={calculateAgain}
             />
           </View>
         </View>
+
+        <TouchableOpacity onPress={NavigateToHomeScreen}>
+          <View style={styles.iconContainer}>
+            <Ionicons
+              name={Platform.OS === 'android' ? 'md-home' : 'ios-home'}
+              size={42}
+            />
+          </View>
+        </TouchableOpacity>
       </View>
 
     </View>
@@ -125,29 +124,24 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18
   },
-  buttonsContainer: {
-    flex: 1,
-    alignItems: 'center',
+  navigationContainer: {
+    flexDirection: 'row',
     marginTop: 15,
     marginBottom: 50
   },
-  buttonsRow: {
-    flexDirection: 'row',
-    width: '80%',
-    justifyContent: 'space-around'
+  buttonsContainer: {
+    alignItems: 'center'
   },
   button: {
     marginVertical: 10,
-    width: Dimensions.get('window').width * 0.6
-  },
-  calcButton: {
-    width: '100%'
+    width: Dimensions.get('window').width * 0.7
   },
   iconContainer: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
-    marginLeft: 20
+    marginLeft: 10
   }
 });
 

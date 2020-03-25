@@ -6,6 +6,7 @@ import userReducer from './store/reducers/userReducer';
 import formReducer from './store/reducers/formReducer';
 import timeReducer from './store/reducers/timeReducer';
 import audioReducer from './store/reducers/audioReducer';
+import errorReducer from './store/reducers/errorReducer';
 import {
   applyMiddleware,
   combineReducers,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   form: formReducer,
   time: timeReducer,
-  audio: audioReducer
+  audio: audioReducer,
+  error: errorReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

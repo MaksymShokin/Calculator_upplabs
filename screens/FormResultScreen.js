@@ -6,8 +6,7 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
-  ScrollView,
-  KeyboardAvoidingView
+  ScrollView
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
@@ -60,14 +59,8 @@ const FormResultScreen = props => {
   return (
     <LinearGradient colors={['#ebdb34', '#ebb734', '#a67702']} style={styles.linearGradient}>
       <ScrollView>
-        <KeyboardAvoidingView
-          style={{flex: 1}}
-          behavior="padding"
-          keyboardVerticalOffset={100}
-        >
-          {form === 'user' ? <UserForm formSwitch={formSwitch} title='Please fill in quick form!' navigate={true}/> :
-            <FormResult time={time} navigation={props.navigation}/>}
-        </KeyboardAvoidingView>
+        {form === 'user' ? <UserForm formSwitch={formSwitch} title='Please fill in quick form!' navigate={true}/> :
+          <FormResult time={time} navigation={props.navigation}/>}
       </ScrollView>
     </LinearGradient>
   )

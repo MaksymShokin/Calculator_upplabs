@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   mainTitleContainer: {
-    paddingHorizontal: 10
+    paddingHorizontal: 15
   },
   bigContainer: {
     width: '100%',

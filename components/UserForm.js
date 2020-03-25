@@ -13,20 +13,17 @@ import {
 } from 'react-redux';
 
 import * as userActions from '../store/actions/userActions';
+import * as errorActions from '../store/actions/errorActions';
 import * as database from '../database/database';
 import DefaultText from './DefaultText';
 
 const UserForm = props => {
   const {title, navigate} = props;
-  const [firstNameError, setFirstNameError] = useState('');
-  const [lastNameError, setLastNameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [countryError, setCountryError] = useState('');
   const [saving, setSaving] = useState(false);
 
   const {firstName, lastName, email, country, company} = useSelector(state => state.user);
+  const {firstNameError, lastNameError, emailError, countryError} = useSelector(state => state.error);
   const dispatch = useDispatch();
-
 
   const checkValidation = () => {
     if (!firstName) {
@@ -66,23 +63,7 @@ const UserForm = props => {
   };
 
   const onBlurHandler = (input, value) => {
-    switch (input) {
-      case 'firstName':
-        setFirstNameError(value.length < 2 ? 'First Name should have at least 2 letters' : '');
-        break;
-      case 'lastName':
-        setLastNameError(value.length < 2 ? 'Last Name should have at least 2 letters' : '');
-        break;
-      case 'email':
-        const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        setEmailError(emailRegex.test(value.toLowerCase()) ? '' : 'Please enter a valid email');
-        break;
-      case 'country':
-        setCountryError(value.length < 3 ? 'Country name should have at least 3 letters' : '');
-        break;
-      default:
-        break;
-    }
+    dispatch(errorActions.setError(input, value));
   };
 
   const onChangeHandler = (input, value) => {
@@ -138,9 +119,9 @@ const UserForm = props => {
           style={styles.button}
           onPress={checkValidation}
         />
-        {saving && <View style={styles.saveContainer}>
-          <DefaultText>Saved!</DefaultText>
-        </View>}
+        <View style={styles.saveContainer}>
+          {saving && <DefaultText>Saved!</DefaultText>}
+        </View>
       </View>
     </View>
   )
@@ -160,9 +141,9 @@ const styles = StyleSheet.create({
     marginVertical: 15
   },
   saveContainer: {
+    minHeight: 50,
     marginTop: 15,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: 'center'
   }
 });
 
